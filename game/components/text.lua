@@ -1,0 +1,1 @@
+Secs.component("text", {text = ""})

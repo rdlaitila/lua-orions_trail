@@ -1,0 +1,1 @@
+Secs.component("cameraControlled", {isCameraControlled = false})

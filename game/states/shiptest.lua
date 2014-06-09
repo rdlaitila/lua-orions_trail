@@ -52,50 +52,57 @@ function shiptest:enter()
             shipHull[a][b].body = blockBody
             shipHull[a][b].shape = blockShape
             shipHull[a][b].fixture = blockFixture
+            shipHull[a][b].joints = {}
             shipHull[a][b].rgb = {255,255,255}
+            shipHull[a][b].health = 255
+            shipHull[a][b].isDestroyed = false
         end
     end
     
     for a=1, #shipHull do
         for b=1, #shipHull[a] do            
             if shipHull[a][b-1] ~= nil then --weld left
-                love.physics.newWeldJoint(
+                local joint = love.physics.newWeldJoint(
                     shipHull[a][b].body,
                     shipHull[a][b-1].body,
                     0,
                     0,
-                    false
+                    true
                 )
+                table.insert(shipHull[a][b].joints, joint)
             end
             if shipHull[a][b+1] ~= nil then --weld right
-                love.physics.newWeldJoint(
+                local joint = love.physics.newWeldJoint(
                     shipHull[a][b].body,
                     shipHull[a][b+1].body,
                     0,
                     0,
-                    false
+                    true
                 )
+                table.insert(shipHull[a][b].joints, joint)
             end
             if shipHull[a-1] ~= nil then --weld up
                 if shipHull[a-1][b] ~= nil then
-                    love.physics.newWeldJoint(
+                    local joint = love.physics.newWeldJoint(
                         shipHull[a][b].body,
                         shipHull[a-1][b].body,
                         0,
                         0,
-                        false
+                        true
                     )
+                    table.insert(shipHull[a][b].joints, joint)
                 end
             end
             if shipHull[a+1] ~= nil then --weld down
                 if shipHull[a+1][b] ~= nil then
-                    love.physics.newWeldJoint(
+                    local joint = love.physics.newWeldJoint(
                         shipHull[a][b].body,
                         shipHull[a+1][b].body,
                         0,
                         0,
-                        false
+                        true
                     )
+                    table.insert(shipHull[a][b].joints, joint)
                 end
             end
         end
@@ -108,8 +115,27 @@ function shiptest:enter()
     ball.rgb = {255,255,255}
 end
 
-function shiptest:update(dt)
+function shiptest:update(dt)    
+    
+    for a=1, #shipHull do
+        for b=1, #shipHull[a] do
+            if shipHull[a][b].health <= 0 and shipHull[a][b].isDestroyed == false then
+                shipHull[a][b].isDestroyed = true
+                
+                for c=1, #shipHull[a][b].joints do
+                    shipHull[a][b].joints[c]:destroy()
+                end
+                
+                --shipHull[a][b].shape:destroy()                
+                --shipHull[a][b].body:destroy()
+                shipHull[a][b].fixture:destroy()
+                
+            end
+        end
+    end
+    
     world:update(dt)
+    
     if love.keyboard.isDown("up") then camera.y = camera.y + 5 end
     if love.keyboard.isDown("down") then camera.y = camera.y - 5 end
     if love.keyboard.isDown("left") then camera.x = camera.x + 5 end
@@ -137,8 +163,10 @@ function shiptest:draw()
     
     for a=1, #shipHull do 
         for b=1, #shipHull[a] do
-            love.graphics.setColor(shipHull[a][b].rgb)
-            love.graphics.polygon("line", shipHull[a][b].body:getWorldPoints(shipHull[a][b].shape:getPoints()) )
+            if shipHull[a][b].health > 0 then
+                love.graphics.setColor(shipHull[a][b].rgb)
+                love.graphics.polygon("line", shipHull[a][b].body:getWorldPoints(shipHull[a][b].shape:getPoints()) )
+            end
         end
     end
     
@@ -193,10 +221,12 @@ function beginContact(FIXTURE1, FIXTURE2, CONTACT)
     
     if oneishullblock and twoishullblock then
         return
-    elseif oneishullblock == true and twoishullblock == false then
-        F1UD.rgb = {100,100,100}
-    elseif oneishullblock == false and twoishullblock == true then
-        F2UD.rgb = {100,100,100}
+    elseif oneishullblock == true and twoishullblock == false then        
+        F1UD.health = F1UD.health - 255
+        F1UD.rgb = {F1UD.health,F1UD.health,F1UD.health}
+    elseif oneishullblock == false and twoishullblock == true then        
+        F2UD.health = F2UD.health - 255
+        F2UD.rgb = {F2UD.health,F2UD.health,F2UD.health}
     end    
 end
 

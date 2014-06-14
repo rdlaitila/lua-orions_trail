@@ -1,8 +1,8 @@
 game.states.Shiptest = {}
 local shiptest = game.states.Shiptest
 
-BLOCK_WIDTH = 30
-BLOCK_HEIGHT = 30
+BLOCK_WIDTH = 10
+BLOCK_HEIGHT = 10
 BLOCK_SPACING = 20
 
 ship1 = {
@@ -14,22 +14,22 @@ ship2 = {
 }
 
 shipHull = {
-    {{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1}},
-    {{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1}},
-    {{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1}},
-    {{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1}},
-    {{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1}},
-    {{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1}},
-    {{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1}},
-    {{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1}},
-    {{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1}},
-    {{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1}},
-    {{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1}},
-    {{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1}},
-    {{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1}},
-    {{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1}},
-    {{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1}},
-    {{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1}}
+    {{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1}},
+    {{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1}},
+    {{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1}},
+    {{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1}},
+    {{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1}},
+    {{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1}},
+    {{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1}},
+    {{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1}},
+    {{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1}},
+    {{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1}},
+    {{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1}},
+    {{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1}},
+    {{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1}},
+    {{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1}},
+    {{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1}},
+    {{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1},{bt=1}}
 }
 
 function shiptest:enter()   
@@ -44,7 +44,7 @@ function shiptest:enter()
             print("blocky:" .. tostring(BLOCK_HEIGHT*a/2))
             local blockBody = love.physics.newBody(world, BLOCK_WIDTH*b, BLOCK_HEIGHT*a, "dynamic")
             local blockShape = love.physics.newRectangleShape(BLOCK_WIDTH, BLOCK_HEIGHT)
-            local blockFixture = love.physics.newFixture(blockBody, blockShape, 10000)
+            local blockFixture = love.physics.newFixture(blockBody, blockShape, 100)
             
             blockBody:setUserData(shipHull[a][b])
             blockFixture:setUserData(shipHull[a][b])
@@ -65,9 +65,9 @@ function shiptest:enter()
                 local joint = love.physics.newWeldJoint(
                     shipHull[a][b].body,
                     shipHull[a][b-1].body,
-                    0,
-                    0,
-                    true
+                    shipHull[a][b-1].body:getX(),
+                    shipHull[a][b-1].body:getY(),
+                    false
                 )
                 table.insert(shipHull[a][b].joints, joint)
             end
@@ -75,9 +75,9 @@ function shiptest:enter()
                 local joint = love.physics.newWeldJoint(
                     shipHull[a][b].body,
                     shipHull[a][b+1].body,
-                    0,
-                    0,
-                    true
+                    shipHull[a][b+1].body:getX(),
+                    shipHull[a][b+1].body:getY(),
+                    false
                 )
                 table.insert(shipHull[a][b].joints, joint)
             end
@@ -86,22 +86,22 @@ function shiptest:enter()
                     local joint = love.physics.newWeldJoint(
                         shipHull[a][b].body,
                         shipHull[a-1][b].body,
-                        0,
-                        0,
-                        true
+                        shipHull[a-1][b].body:getX(),
+                        shipHull[a-1][b].body:getY(),
+                        false
                     )
                     table.insert(shipHull[a][b].joints, joint)
-                end
+                end            
             end
             if shipHull[a+1] ~= nil then --weld down
                 if shipHull[a+1][b] ~= nil then
                     local joint = love.physics.newWeldJoint(
                         shipHull[a][b].body,
                         shipHull[a+1][b].body,
-                        0,
-                        0,
-                        true
-                    )
+                        shipHull[a+1][b].body:getX(),
+                        shipHull[a+1][b].body:getY(),
+                        false
+                    )                    
                     table.insert(shipHull[a][b].joints, joint)
                 end
             end
@@ -111,7 +111,7 @@ function shiptest:enter()
     ball = {}
     ball.body = love.physics.newBody(world, love.graphics.getWidth()/2, 100, "dynamic")
     ball.shape = love.physics.newCircleShape(20)
-    ball.fixture = love.physics.newFixture(ball.body, ball.shape, 1000)
+    ball.fixture = love.physics.newFixture(ball.body, ball.shape, 1)
     ball.rgb = {255,255,255}
 end
 
@@ -122,38 +122,38 @@ function shiptest:update(dt)
             if shipHull[a][b].health <= 0 and shipHull[a][b].isDestroyed == false then
                 shipHull[a][b].isDestroyed = true
                 
-                for c=1, #shipHull[a][b].joints do
-                    shipHull[a][b].joints[c]:destroy()
-                end
-                
                 --shipHull[a][b].shape:destroy()                
-                --shipHull[a][b].body:destroy()
-                shipHull[a][b].fixture:destroy()
-                
+                shipHull[a][b].body:destroy()
+                --shipHull[a][b].fixture:destroy()                
+                shipHull[a][b].joints = {}                
             end
         end
     end
     
     world:update(dt)
     
-    if love.keyboard.isDown("up") then camera.y = camera.y + 5 end
-    if love.keyboard.isDown("down") then camera.y = camera.y - 5 end
-    if love.keyboard.isDown("left") then camera.x = camera.x + 5 end
-    if love.keyboard.isDown("right") then camera.x = camera.x - 5 end
+    if love.keyboard.isDown("down") then camera.y = camera.y + 5 end
+    if love.keyboard.isDown("up") then camera.y = camera.y - 5 end
+    if love.keyboard.isDown("right") then camera.x = camera.x + 5 end
+    if love.keyboard.isDown("left") then camera.x = camera.x - 5 end
     
     --here we are going to create some keyboard events
   if love.keyboard.isDown("d") then --press the right arrow key to push the ball to the right
-    ball.body:applyForce(40000, 0)
+    ball.body:applyForce(400, 0)
   elseif love.keyboard.isDown("a") then --press the left arrow key to push the ball to the left
-    ball.body:applyForce(-40000, 0)
+    ball.body:applyForce(-400, 0)
   elseif love.keyboard.isDown("w") then --press the up arrow key to set the ball in the air
-    ball.body:applyForce(0, -40000)
+    ball.body:applyForce(0, -400)
     elseif love.keyboard.isDown("s") then --press the up arrow key to set the ball in the air
-    ball.body:applyForce(0, 40000)
+    ball.body:applyForce(0, 400)
   end
     
     if love.keyboard.isDown("p") then
         ball.body:applyForce(-99999999, 0)
+    end
+    
+    if love.keyboard.isDown("r") then
+        ball.body:setX(love.graphics.getWidth()/2, 200)
     end
     Secs.update(dt)
 end
@@ -163,9 +163,18 @@ function shiptest:draw()
     
     for a=1, #shipHull do 
         for b=1, #shipHull[a] do
-            if shipHull[a][b].health > 0 then
+            if shipHull[a][b].health > 0 and shipHull[a][b].isDestroyed == false then
                 love.graphics.setColor(shipHull[a][b].rgb)
                 love.graphics.polygon("line", shipHull[a][b].body:getWorldPoints(shipHull[a][b].shape:getPoints()) )
+            end
+            
+            for c=1, #shipHull[a][b].joints do
+                if shipHull[a][b].joints[c] ~= nil then
+                    pcall(function()
+                        love.graphics.setColor(255,0,0)
+                        love.graphics.line(shipHull[a][b].joints[c]:getAnchors())       
+                    end)                                  
+                end
             end
         end
     end
@@ -222,10 +231,10 @@ function beginContact(FIXTURE1, FIXTURE2, CONTACT)
     if oneishullblock and twoishullblock then
         return
     elseif oneishullblock == true and twoishullblock == false then        
-        F1UD.health = F1UD.health - 255
+        F1UD.health = F1UD.health - 75
         F1UD.rgb = {F1UD.health,F1UD.health,F1UD.health}
     elseif oneishullblock == false and twoishullblock == true then        
-        F2UD.health = F2UD.health - 255
+        F2UD.health = F2UD.health - 75
         F2UD.rgb = {F2UD.health,F2UD.health,F2UD.health}
     end    
 end

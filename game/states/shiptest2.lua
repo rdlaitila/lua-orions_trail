@@ -131,9 +131,9 @@ function shiptest2:draw()
     camera:detach()
 end
 
-function shiptest2:keypressed(KEY, ISREPEAT)
-    if key == "p" then
-       ball.body:applyForce(0, 100)
+function shiptest2:keypressed(KEY, ISREPEAT)    
+    if KEY == "escape" then
+        Gamestate.switch(game.states.Mainmenu)
     end
 end
 

@@ -1,26 +1,22 @@
 -- Load in libs
-require('lib.trycatch')
 Camera      = require('lib.hump.camera')
 Gamestate   = require('lib.hump.gamestate')
-Secs        = require('lib.secs')
-Ecs         = require('lib.ecs')
+Ecs         = require('lib.ecs.ecs')
 
 -- Load in other game files
 require('game.game')
 require('game.components.cameracontrolled')
 require('game.components.position')
-require('game.components.text')
-require('game.entities.textentity')
+require('game.components.rotation')
+require('game.entities.block')
 require('game.states.mainmenu')
+require('game.states.shipbuilder')
 require('game.states.shiptest')
 require('game.states.shiptest2')
-require('game.systems.renderer_textentities')
-require('game.types.textentities')
-
 
 function love.load()
     Gamestate.registerEvents()
-    Gamestate.switch(game.states.Shiptest2)
+    Gamestate.switch(game.states.Mainmenu)
 end
 
 function love.update(DT)    

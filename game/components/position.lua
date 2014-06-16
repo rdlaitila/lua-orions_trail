@@ -1,1 +1,9 @@
-Secs.component("position", {x=0, y=0})
+local function Position()
+    local self = {}
+    
+    self.x = 0
+    self.y = 0
+    
+    return self
+end
+game.components.Position = Position

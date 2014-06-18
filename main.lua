@@ -1,14 +1,13 @@
 -- Load in libs
+Class       = require('lib.middleclass')
 Camera      = require('lib.hump.camera')
 Gamestate   = require('lib.hump.gamestate')
-Ecs         = require('lib.ecs.ecs')
+Lecs        = require('lib.lecs.lecs')
 
 -- Load in other game files
 require('game.game')
-require('game.components.cameracontrolled')
 require('game.components.position')
-require('game.components.rotation')
-require('game.entities.block')
+require('game.entities.ship')
 require('game.states.mainmenu')
 require('game.states.shipbuilder')
 require('game.states.shiptest')

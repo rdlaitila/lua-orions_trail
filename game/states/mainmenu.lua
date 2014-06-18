@@ -1,7 +1,7 @@
 game.states.Mainmenu = {}
 local mainmenu = game.states.Mainmenu
 
-local engine = Ecs.Engine()
+local ECSManager = Lecs.Manager:new()
 
 local background = {}
 background.image = love.graphics.newImage("game//assets//backgrounds//nebula01.png")

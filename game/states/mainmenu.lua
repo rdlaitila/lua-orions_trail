@@ -20,6 +20,7 @@ function mainmenu:draw()
     love.graphics.print("1.) Ship Builder", 0, 0)
     love.graphics.print("2.) Ship Test", 0, 15)
     love.graphics.print("3.) Ship Test 2", 0, 30)
+    love.graphics.print("4.) Ship Test 3", 0, 45)
 end
 
 function mainmenu:keypressed(KEY, ISREPEAT)
@@ -29,6 +30,8 @@ function mainmenu:keypressed(KEY, ISREPEAT)
         Gamestate.switch(game.states.Shiptest)
     elseif KEY == "3" then
         Gamestate.switch(game.states.Shiptest2)
+    elseif KEY == "4" then
+        Gamestate.switch(game.states.Shiptest3)
     end
 end
 

@@ -1,9 +1,13 @@
 local Ship = Class("Ship", Lecs.Entity)
 
-function Ship:initialize(X, Y, R, WIDTH, HEIGHT)
-    Lecs.Entity:initialize()
+function Ship:initialize()
+    Lecs.Entity.initialize(self)
     
-    self:addComponent(game.components.Position:new(X or 0, Y or 0, R or 0))
+    self:addTag("ship")
+    
+    self.hullBlocks = {}
+    self.systemBlocks = {}
+    self.interiorBlocks = {}
 end
 
 game.entities.Ship = Ship

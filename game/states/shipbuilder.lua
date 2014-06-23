@@ -19,7 +19,6 @@ function Shipbuilder:enter()
 
     ecsManager:addEntity(ship)
     
-    
 end
 
 function Shipbuilder:update(dt)    

@@ -1,8 +1,9 @@
 local Entity = Class("Entity")
 
 function Entity:initialize()
+    self._ecsManager = nil
     self._components = {}
-    self._tags = {}
+    self._tags = {}   
 end
 
 function Entity:addComponent(COMPONENT)
@@ -33,7 +34,7 @@ function Entity:addTag(TAGNAME)
     
     if tagFound == true then
         -- TODO: failcode
-    else
+    else        
         table.insert(self._tags, TAGNAME)
     end
 end

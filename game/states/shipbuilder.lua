@@ -13,6 +13,7 @@ background.renderX = 0
 background.renderY = 0
 
 function Shipbuilder:enter()
+    require('game.entities.ship')
     camera = Camera(love.graphics.getWidth()/2,love.graphics.getHeight()/2)
     
     local ship = game.entities.Ship:new()

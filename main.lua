@@ -1,5 +1,6 @@
 -- Load in libs
 require('lib.tableutils')
+require('lib.stringutils')
 Class       = require('lib.middleclass')
 Camera      = require('lib.hump.camera')
 Gamestate   = require('lib.hump.gamestate')

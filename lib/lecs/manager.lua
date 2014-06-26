@@ -2,24 +2,18 @@ local Manager = Class("Manager")
 
 function Manager:initialize()
     self._entities = {}
+    self._components = {}
     self._systems = {}
+    self._entityComponentMap = {}
 end
 
-function Manager:update(DT)
-    table.sort(self._systems, function(A, B) 
-        return A._priority < B._priority
-    end)
-    
+function Manager:update(DT)    
     for a=1, #self._systems do
         self._systems[a]:update(DT)
     end
 end
 
-function Manager:draw()
-    table.sort(self._systems, function(A, B) 
-        return A._priority < B._priority
-    end)
-    
+function Manager:draw()    
     for a=1, #self._systems do
         self._systems[a]:draw()
     end
@@ -47,22 +41,30 @@ function Manager:addEntity(...)
     end
 end
 
-function Manager:addSystem(SYSTEM)
-    local systemFound = false
+function Manager:addSystem(...)
+    local systems = {...}
     
-    for a=1, #self._systems do
-        if self._systems[a] == SYSTEM then
-            systemFound = true
-            break
+    for key, value in pairs(systems) do
+        local systemFound = false
+        
+        for a=1, #self._systems do
+            if self._systems[a] == value then
+                systemFound = true
+                break
+            end
+        end
+        
+        if systemFound == false then
+            value._ecsManager = self
+            table.insert(self._systems, value)
+        else
+            -- TODO: failcode
         end
     end
     
-    if systemFound == false then
-        SYSTEM._ecsManager = self
-        table.insert(self._systems, SYSTEM)
-    else
-        -- TODO: failcode
-    end
+    table.sort(self._systems, function(A, B) 
+        return A._priority < B._priority
+    end)
 end
 
 function Manager:getEntitiesWithTag(TAGNAME)    

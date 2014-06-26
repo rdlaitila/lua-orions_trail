@@ -1,6 +1,7 @@
 -- Load in libs
 require('lib.tableutils')
 require('lib.stringutils')
+
 Class       = require('lib.middleclass')
 Camera      = require('lib.hump.camera')
 Gamestate   = require('lib.hump.gamestate')
@@ -17,10 +18,4 @@ require('game.states.shiptest3')
 function love.load()
     Gamestate.registerEvents()
     Gamestate.switch(game.states.Mainmenu)
-end
-
-function love.update(DT)    
-end
-
-function love.draw()    
 end

@@ -1,4 +1,4 @@
-local mainmenu = game.states.Mainmenu
+local mainmenu = {}
 
 local ECSManager = Lecs.Manager:new()
 
@@ -34,4 +34,4 @@ function mainmenu:keypressed(KEY, ISREPEAT)
     end
 end
 
-game.states.Mainmenu = {}
+game.states.Mainmenu = mainmenu

@@ -9,8 +9,8 @@ end
 function EntityDebug:update(DT)
 end
 
-function EntityDebug:draw()        
-    local liney = 0
+function EntityDebug:draw()
+    local liney = 0    
     for a=1, #self._ecsManager._entities do
         local entity = self._ecsManager._entities[a]
         love.graphics.print("Entity: " .. tostring(entity), 0, liney)

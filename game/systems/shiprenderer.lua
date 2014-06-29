@@ -13,24 +13,21 @@ end
 function ShipRenderer:draw()
     local ships = self._ecsManager:getEntitiesWithTag("ship")
     
+    if VIEW == 1 then
+        CAMERA.x = ships[1].box2dBody:getX()
+        CAMERA.y = ships[1].box2dBody:getY()
+        CAMERA.rot = ships[1].box2dBody:getAngle()*-1
+    end
+    
     for a=1, #ships do
-        local shipPosition = ships[a]:getComponent("position")
-        local shipBlocks = ships[a]:getComponent("blockentitylist").list
+        local shipcenterx, shipcentery = ships[a].box2dBody:getWorldCenter()
+        love.graphics.circle("fill", shipcenterx, shipcentery, 5)
+        love.graphics.print("Ship Rotation: "..tostring(ships[a].box2dBody:getAngle()), 100, 100)
         
-        --draw grid centers 10 times in each direction
-        
-        
-        
-        
-        love.graphics.print(#shipBlocks, 600, 600)
-        
-        love.graphics.circle("line", shipPosition.x, shipPosition.y, 5)
-        
-        for b=1, #shipBlocks do
-            local blockx = (shipPosition.x) + (BLOCK_WIDTH) * shipBlocks[b]:getComponent("blockgridposition").x
-            local blocky = (shipPosition.y) + (BLOCK_HEIGHT) * shipBlocks[b]:getComponent("blockgridposition").y
-            love.graphics.rectangle("line", blockx, blocky, BLOCK_WIDTH, BLOCK_HEIGHT)
-            love.graphics.print(b, blockx, blocky)
+        for b=1, #ships[a].blockList do
+            local block = ships[a].blockList[b]
+            
+            love.graphics.polygon('line', ships[a].box2dBody:getWorldPoints(block.box2dShape:getPoints()) )
         end
     end
 end

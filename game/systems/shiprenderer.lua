@@ -20,7 +20,7 @@ function ShipRenderer:draw()
     elseif G_VIEW == 2 then
         G_CAMERA.x = ships[1].box2dBody:getX()
         G_CAMERA.y = ships[1].box2dBody:getY()
-        G_CAMERA.rot = (ships[1].box2dBody:getAngle()*-1)*.25
+        G_CAMERA.rot = math.rad(math.deg(ships[1].box2dBody:getAngle()*-1) - 90)
     end
     
     for a=1, #ships do
@@ -35,8 +35,8 @@ function ShipRenderer:draw()
             
             if block.y > bottomygrid then bottomygrid = block.y end
             
-            local spritex, spritey = ships[a]:getShipGridXYWorld(block.x, block.y, -20, -20)
-            love.graphics.draw(block.sprite, spritex, spritey, ships[a].box2dBody:getAngle(), 40/block.sprite:getWidth(), 40/block.sprite:getHeight())
+            --local spritex, spritey = ships[a]:getShipGridXYWorld(block.x, block.y, -20, -20)
+            --love.graphics.draw(block.sprite, spritex, spritey, ships[a].box2dBody:getAngle(), 40/block.sprite:getWidth(), 40/block.sprite:getHeight())
             
             love.graphics.polygon('line', ships[a].box2dBody:getWorldPoints(block.box2dShape:getPoints()) )
             

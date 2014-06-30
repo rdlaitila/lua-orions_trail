@@ -5,7 +5,7 @@ function Ship:initialize(X,Y,ROT)
     
     self:addTag("ship")
     
-    self.box2dBody = love.physics.newBody(BOX2DWORLD, X, Y, "dynamic")
+    self.box2dBody = love.physics.newBody(G_BOX2DWORLD, X, Y, "dynamic")
     
     self.blockList = {}
 end
@@ -36,27 +36,29 @@ function Ship:addShipBlock(...)
     end
 end
 
-function Ship:getShipGridXYWorld(SHIPGRIDX, SHIPGRIDY)
+function Ship:getShipGridXYWorld(SHIPGRIDX, SHIPGRIDY, OFFSETX, OFFSETY)
     local shipx = self.box2dBody:getX()
     local shipy = self.box2dBody:getY()
     local shipr = self.box2dBody:getAngle()
     
+    if OFFSETX == nil then OFFSETX = 0 end
+    if OFFSETY == nil then OFFSETY = 0 end
     
     local blockwidth = 40
     local blockheight = 40
     
     local newgridx = 0
     if SHIPGRIDX == 0 then
-        newgridx = shipx
+        newgridx = shipx + OFFSETX
     else
-        newgridx = shipx + (blockwidth*SHIPGRIDX)
+        newgridx = shipx + (blockwidth*SHIPGRIDX) + OFFSETX
     end
     
     local newgridy = 0
     if SHIPGRIDY == 0 then
-        newgridy = shipy
+        newgridy = shipy + OFFSETY
     else
-        newgridy = shipy + (blockheight*SHIPGRIDY) 
+        newgridy = shipy + (blockheight*SHIPGRIDY) + OFFSETY
     end 
     
     local nx = shipx + ( math.cos(shipr) * (newgridx - shipx) - math.sin(shipr) * (newgridy - shipy) )

@@ -20,6 +20,8 @@ function ShipBlock:initialize(BLOCK_TYPE, GRIDPOS_X, GRIDPOS_Y, GRIDPOS_R, SHAPE
     self.box2dFixture = nil
     
     self.box2dFixtureDensity = 100
+    
+    self.sprite = love.graphics.newImage("game//assets//blocksprites/ship_hull_1.jpg")
 end
 
 game.entities.ShipBlock = ShipBlock

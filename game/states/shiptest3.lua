@@ -14,10 +14,10 @@ function Shiptest3:enter()
     require('game.systems.shiprenderer')
     
     -- Setup state globals
-    BOX2DWORLD = love.physics.newWorld(0, 0, true)
-    ECSMANAGER = Lecs.Manager:new() 
-    CAMERA = Camera(love.graphics.getWidth()/2,love.graphics.getHeight()/2)
-    VIEW = 0
+    G_BOX2DWORLD = love.physics.newWorld(0, 0, true)
+    G_ECSMANAGER = Lecs.Manager:new() 
+    G_CAMERA = Camera(love.graphics.getWidth()/2,love.graphics.getHeight()/2)
+    G_VIEW = 0
     
     local ship = game.entities.Ship:new(200, 200, 0)
     ship:addShipBlock(
@@ -41,81 +41,96 @@ function Shiptest3:enter()
         game.entities.ShipBlock:new("HULL_BLOCK", 0, -1)
     )
     
-    ECSMANAGER:addEntity(
+    G_ECSMANAGER:addEntity(
         ship,
         ship2
     )
     
-    ECSMANAGER:addSystem(
-        game.systems.EntityDebug:new(0),
+    G_ECSMANAGER:addSystem(        
         game.systems.ShipRenderer:new(0)
     )
 end
 
 function Shiptest3:update(DT)
-    BOX2DWORLD:update(DT)
-    ECSMANAGER:update(DT)
+    G_BOX2DWORLD:update(DT)
+    G_ECSMANAGER:update(DT)
     
-    local THRUST_FORCE = 1000
+    local THRUST_FORCE = 10000
     
-    local body = ECSMANAGER:getEntitiesWithTag("ship")[1].box2dBody 
+    local body = G_ECSMANAGER:getEntitiesWithTag("ship")[1].box2dBody 
     
-    if love.keyboard.isDown('r') then
-        body:applyForce( THRUST_FORCE, THRUST_FORCE, 250, 250 )
-        --body:setAngle(body:getAngle() + (10*DT))
+    if love.keyboard.isDown('q') then
+        body:applyAngularImpulse( -1*THRUST_FORCE )        
+    end
+    
+    if love.keyboard.isDown('e') then
+        body:applyAngularImpulse( THRUST_FORCE )
+    end
+    
+    if love.keyboard.isDown("w") then        
+        local thrust_x = math.cos(body:getAngle())*THRUST_FORCE
+        local thrust_y = math.sin(body:getAngle())*THRUST_FORCE        
+        body:applyForce(thrust_x, thrust_y)
+    end
+    
+    if love.keyboard.isDown("s") then
+        local thrust_x = -1*math.cos(body:getAngle())*THRUST_FORCE
+        local thrust_y = -1*math.sin(body:getAngle())*THRUST_FORCE        
+        body:applyForce(thrust_x, thrust_y)
     end
     
     if love.keyboard.isDown("a") then
-        body:applyForce(-1*THRUST_FORCE, 0)
+        local thrust_x = math.cos(body:getAngle()/2)*(THRUST_FORCE)
+        local thrust_y = math.sin(body:getAngle()/2)*(THRUST_FORCE)
+        body:applyForce(thrust_x, thrust_y)
     end
     if love.keyboard.isDown("d") then
-         body:applyForce(THRUST_FORCE, 0)
-    end
-    if love.keyboard.isDown("w") then
-         body:applyForce(0, -1*THRUST_FORCE)
-    end
-    if love.keyboard.isDown("s") then
-         body:applyForce(0, THRUST_FORCE)
+        local thrust_x = math.cos(body:getAngle())*(THRUST_FORCE)
+        local thrust_y = math.sin(body:getAngle())*(THRUST_FORCE)   
+        body:applyForce(thrust_x, thrust_y)
     end
     
     if love.keyboard.isDown("down") then 
-        CAMERA.y = CAMERA.y + 3
+        G_CAMERA.y = G_CAMERA.y + 3
     end
     if love.keyboard.isDown("up") then 
-        CAMERA.y = CAMERA.y - 3
+        G_CAMERA.y = G_CAMERA.y - 3
     end
     if love.keyboard.isDown("right") then 
-        CAMERA.x = CAMERA.x + 3
+        G_CAMERA.x = G_CAMERA.x + 3
     end
     if love.keyboard.isDown("left") then 
-        CAMERA.x = CAMERA.x - 3
+        G_CAMERA.x = G_CAMERA.x - 3
     end
 end
 
 function Shiptest3:draw()
     
-    CAMERA:attach()
-    ECSMANAGER:draw(DT)
-    CAMERA:detach()
+    G_CAMERA:attach()
+    G_ECSMANAGER:draw(DT)
+    G_CAMERA:detach()
 end
 
 function Shiptest3:mousepressed( x, y, mb )
    if mb == "wu" then
-      CAMERA.scale = CAMERA.scale - 0.2
+      G_CAMERA.scale = G_CAMERA.scale - 0.2
       
    end
 
    if mb == "wd" then
-      CAMERA.scale = CAMERA.scale + 0.2
+      G_CAMERA.scale = G_CAMERA.scale + 0.2
    end
 end
 
 function Shiptest3:keypressed(KEY, ISREPEAT)
     if KEY == "v" then
-        if VIEW == 1 then
-            VIEW = 0
-        else
-            VIEW = 1
+        if G_VIEW == 0 then
+            G_VIEW = 1
+        elseif G_VIEW == 1 then
+            G_VIEW = 2            
+        elseif G_VIEW == 2 then
+            G_VIEW = 0
+            G_CAMERA.rot = 0
         end
     end
 end

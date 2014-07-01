@@ -1,5 +1,7 @@
 local ShipBlock = Class("ShipBlock", Lecs.Entity)
 
+ShipBlock.sprite = love.graphics.newImage("game//assets//blocksprites/ship_hull_1.jpg")
+
 function ShipBlock:initialize(BLOCK_TYPE, GRIDPOS_X, GRIDPOS_Y, GRIDPOS_R, SHAPE_TYPE)
     Lecs.Entity.initialize(self)
     
@@ -21,7 +23,7 @@ function ShipBlock:initialize(BLOCK_TYPE, GRIDPOS_X, GRIDPOS_Y, GRIDPOS_R, SHAPE
     
     self.box2dFixtureDensity = 100
     
-    self.sprite = love.graphics.newImage("game//assets//blocksprites/ship_hull_1.jpg")
+    self.sprite = ShipBlock.sprite
 end
 
 game.entities.ShipBlock = ShipBlock

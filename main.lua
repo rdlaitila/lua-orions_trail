@@ -17,6 +17,11 @@ require('game.states.shiptest2')
 require('game.states.shiptest3')
 
 function love.load()
+    love.filesystem.append("mem.txt", "start: "..tostring(collectgarbage("count")*1024) .. "\r\n")
     Gamestate.registerEvents()
     Gamestate.switch(game.states.Mainmenu)
+end
+
+function love.draw()
+   love.graphics.print('Memory actually used (in MB): ' .. collectgarbage('count')/1024, 10,10)
 end

@@ -13,26 +13,27 @@ end
 function Ship:addShipBlock(...)
     local blocks = {...}
     
-    for key, value in pairs(blocks) do
-        local block = value       
+    for index in pairs(blocks) do             
         
-        local blockx, blocky = self:getShipGridXYRelative(block.x, block.y)
+        local blockx, blocky = self:getShipGridXYRelative(blocks[index].x, blocks[index].y)
         
-        if block.box2dShapeType == "polygon" then
+        if blocks[index].box2dShapeType == "polygon" then
             -- TODO: Polygon block type
-        elseif block.box2dShapeType == "rectangle" then
-            block.box2dShape = love.physics.newRectangleShape(
+        elseif blocks[index].box2dShapeType == "rectangle" then
+            blocks[index].box2dShape = love.physics.newRectangleShape(
                 blockx,
                 blocky,
                 40, 
                 40, 
-                self.box2dBody:getAngle() + block.r
+                self.box2dBody:getAngle() + blocks[index].r
             )            
         end
         
-        block.box2dFixture = love.physics.newFixture( self.box2dBody, block.box2dShape, 100 )
+        blocks[index].box2dFixture = love.physics.newFixture( self.box2dBody, blocks[index].box2dShape, 100 )
         
-        table.insert(self.blockList, block)
+        table.insert(self.blockList, blocks[index])        
+       
+        love.filesystem.append("mem.txt", "add block: " .. tostring(collectgarbage("count")*1024) .. "\r\n")
     end
 end
 

@@ -35,8 +35,8 @@ function ShipRenderer:draw()
             
             if block.y > bottomygrid then bottomygrid = block.y end
             
-            --local spritex, spritey = ships[a]:getShipGridXYWorld(block.x, block.y, -20, -20)
-            --love.graphics.draw(block.sprite, spritex, spritey, ships[a].box2dBody:getAngle(), 40/block.sprite:getWidth(), 40/block.sprite:getHeight())
+            local spritex, spritey = ships[a]:getShipGridXYWorld(block.x, block.y, -20, -20)
+            love.graphics.draw(block.sprite, spritex, spritey, ships[a].box2dBody:getAngle(), 40/block.sprite:getWidth(), 40/block.sprite:getHeight())
             
             love.graphics.polygon('line', ships[a].box2dBody:getWorldPoints(block.box2dShape:getPoints()) )
             

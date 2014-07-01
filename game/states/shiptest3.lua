@@ -1,23 +1,23 @@
 local Shiptest3 = {}
 
 function Shiptest3:enter()
-    require('game.components.position')
-    require('game.components.box2dbody')
-    require('game.components.blockentitylist')
-    require('game.components.blocktype')
-    require('game.components.blockgridposition')
-    require('game.components.blocksprite')
     require('game.entities.ship')
     require('game.entities.shipblock')
+    require('game.entities.parallaxbackground')
     require('game.systems.coresystem')
     require('game.systems.entitydebug')
     require('game.systems.shiprenderer')
+    require('game.systems.parallaxrenderer')
     
     -- Setup state globals
     G_BOX2DWORLD = love.physics.newWorld(0, 0, true)
     G_ECSMANAGER = Lecs.Manager:new() 
     G_CAMERA = Camera(love.graphics.getWidth()/2,love.graphics.getHeight()/2)
     G_VIEW = 0
+    
+    local background = game.entities.ParallaxBackground:new(
+        
+    )
     
     local ship = game.entities.Ship:new(200, 200, 0)
     ship:addShipBlock(

@@ -52,6 +52,13 @@ function ShipRenderer:draw()
         love.graphics.print("Y: "..tostring(ships[a].box2dBody:getY()), text3x, text3y, ships[a].box2dBody:getAngle())
         local text4x, text4y = ships[a]:getShipGridXYWorld(0, bottomygrid+1, 0, 45)
         love.graphics.print("M: "..tostring(ships[a].box2dBody:getMass()), text4x, text4y, ships[a].box2dBody:getAngle())
+        
+        local vx, vy = ships[a].box2dBody:getLinearVelocity()
+        
+        local text5x, text5y = ships[a]:getShipGridXYWorld(0, bottomygrid+1, 0, 60)
+        love.graphics.print("XV: "..tostring(vx), text5x, text5y, ships[a].box2dBody:getAngle())
+        local text6x, text6y = ships[a]:getShipGridXYWorld(0, bottomygrid+1, 0, 75)
+        love.graphics.print("XY: "..tostring(vy), text6x, text6y, ships[a].box2dBody:getAngle())
     end
 end
 

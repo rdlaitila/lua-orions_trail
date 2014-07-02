@@ -13,9 +13,12 @@ function ShipBlock:initialize(BLOCK_TYPE, GRIDPOS_X, GRIDPOS_Y, GRIDPOS_R, SHAPE
     
     self.y = GRIDPOS_Y    
     
-    self.r = 0
-    
-    self.box2dShapeType = SHAPE_TYPE or "rectangle"
+    self.box2dMesh = {
+        {10, 0},
+        {30, 0},
+        {40, 40},
+        {0, 40}
+    }
     
     self.box2dShape = nil
     

@@ -13,23 +13,30 @@ end
 function Ship:addShipBlock(...)
     local blocks = {...}
     
-    for index in pairs(blocks) do             
+    for index in pairs(blocks) do  
+        local block = blocks[index]
         
-        local blockx, blocky = self:getShipGridXYRelative(blocks[index].x, blocks[index].y)
+        local meshPoints = {}
         
-        if blocks[index].box2dShapeType == "polygon" then
-            -- TODO: Polygon block type
-        elseif blocks[index].box2dShapeType == "rectangle" then
-            blocks[index].box2dShape = love.physics.newRectangleShape(
-                blockx,
-                blocky,
-                40, 
-                40, 
-                self.box2dBody:getAngle() + blocks[index].r
-            )            
+        for a=1, #block.box2dMesh do
+            local pointx = block.box2dMesh[a][1]-20
+            local pointy = block.box2dMesh[a][2]-20
+            
+            local newx, newy = self:getShipGridXYRelative(block.x, block.y)
+            
+            table.insert(meshPoints, newx+pointx)
+            table.insert(meshPoints, newy+pointy)
         end
         
-        blocks[index].box2dFixture = love.physics.newFixture( self.box2dBody, blocks[index].box2dShape, 100 )
+        --local blockx, blocky = self:getShipGridXYRelative(blocks[index].x, blocks[index].y)
+        
+        --local blockx_origin, blocky_origin = self:getShipGridXYRelative(blocks[index].x - 20, blocks[index].y - 20)
+        
+        block.box2dShape = love.physics.newPolygonShape(unpack(meshPoints))         
+        
+        
+        
+        block.box2dFixture = love.physics.newFixture( self.box2dBody, block.box2dShape, 100 )
         
         table.insert(self.blockList, blocks[index])        
        

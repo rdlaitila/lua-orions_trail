@@ -1,9 +1,7 @@
 local Hullblock01 = Class("Hullblock01", game.entities.ShipBlock)
 
-Hullblock01.sprite = love.graphics.newImage("game//assets//blocksprites/ship_hull_1.jpg")
-
 function Hullblock01:initialize(BLOCK_TYPE, GRIDPOS_X, GRIDPOS_Y, GRIDPOS_R, SHAPE_TYPE)
-    Lecs.Entity.initialize(self)
+    game.entities.ShipBlock.initialize(self, BLOCK_TYPE, GRIDPOS_X, GRIDPOS_Y, GRIDPOS_R, SHAPE_TYPE)
     
     self:addTag("block")
     
@@ -15,18 +13,18 @@ function Hullblock01:initialize(BLOCK_TYPE, GRIDPOS_X, GRIDPOS_Y, GRIDPOS_R, SHA
     
     self.box2dMesh = {
         {0, 0},
-        {40, 0},
-        {40, 40},
-        {0, 40}
+        {G_BLOCKWIDTH, 0},
+        {G_BLOCKWIDTH, G_BLOCKHEIGHT},
+        {0, G_BLOCKHEIGHT}
     }
     
     self.box2dShape = nil
     
     self.box2dFixture = nil
     
-    self.box2dFixtureDensity = 100
+    self.box2dFixtureDensity = 500
     
-    self.sprite = Hullblock01.sprite
+    self.sprite = game.entities.ShipBlock.tileSetQuads[1][1]
 end
 
 game.entities.Hullblock01 = Hullblock01

@@ -1,8 +1,5 @@
 local ShipRenderer = Class('ShipRenderer', Lecs.System)
 
-local BLOCK_WIDTH = 40
-local BLOCK_HEIGHT = 40
-
 function ShipRenderer:initialize(PRIORITY)
     Lecs.System.initialize(self, PRIORITY)
 end
@@ -35,8 +32,17 @@ function ShipRenderer:draw()
             
             if block.y > bottomygrid then bottomygrid = block.y end
             
-            local spritex, spritey = ships[a]:getShipGridXYWorld(block.x, block.y, -20, -20)
-            love.graphics.draw(block.sprite, spritex, spritey, ships[a].box2dBody:getAngle(), 40/block.sprite:getWidth(), 40/block.sprite:getHeight())
+            local spritex, spritey = ships[a]:getShipGridXYWorld(block.x, block.y, -1*G_BLOCKWIDTH/2, -1*G_BLOCKHEIGHT/2)
+            
+            love.graphics.draw(
+                game.entities.ShipBlock.tileSetImage,
+                block.sprite, 
+                spritex, 
+                spritey, 
+                ships[a].box2dBody:getAngle(), 
+                G_BLOCKWIDTH, 
+                G_BLOCKHEIGHT
+            )
             
             love.graphics.polygon('line', ships[a].box2dBody:getWorldPoints(block.box2dShape:getPoints()) )
             

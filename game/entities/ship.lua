@@ -19,8 +19,8 @@ function Ship:addShipBlock(...)
         local meshPoints = {}
         
         for a=1, #block.box2dMesh do
-            local pointx = block.box2dMesh[a][1]-20
-            local pointy = block.box2dMesh[a][2]-20
+            local pointx = block.box2dMesh[a][1] - (G_BLOCKWIDTH/2)
+            local pointy = block.box2dMesh[a][2] - (G_BLOCKHEIGHT/2)
             
             local newx, newy = self:getShipGridXYRelative(block.x, block.y)
             
@@ -28,15 +28,9 @@ function Ship:addShipBlock(...)
             table.insert(meshPoints, newy+pointy)
         end
         
-        --local blockx, blocky = self:getShipGridXYRelative(blocks[index].x, blocks[index].y)
-        
-        --local blockx_origin, blocky_origin = self:getShipGridXYRelative(blocks[index].x - 20, blocks[index].y - 20)
-        
         block.box2dShape = love.physics.newPolygonShape(unpack(meshPoints))         
         
-        
-        
-        block.box2dFixture = love.physics.newFixture( self.box2dBody, block.box2dShape, 100 )
+        block.box2dFixture = love.physics.newFixture( self.box2dBody, block.box2dShape, block.box2dFixtureDensity )
         
         table.insert(self.blockList, blocks[index])        
        
@@ -52,8 +46,8 @@ function Ship:getShipGridXYWorld(SHIPGRIDX, SHIPGRIDY, OFFSETX, OFFSETY)
     if OFFSETX == nil then OFFSETX = 0 end
     if OFFSETY == nil then OFFSETY = 0 end
     
-    local blockwidth = 40
-    local blockheight = 40
+    local blockwidth = G_BLOCKWIDTH
+    local blockheight = G_BLOCKHEIGHT
     
     local newgridx = 0
     if SHIPGRIDX == 0 then
@@ -81,8 +75,8 @@ function Ship:getShipGridXYRelative(SHIPGRIDX, SHIPGRIDY)
     local shipr = self.box2dBody:getAngle()
     
     
-    local blockwidth = 40
-    local blockheight = 40
+    local blockwidth = G_BLOCKWIDTH
+    local blockheight = G_BLOCKHEIGHT
     
     local newgridx = 0
     if SHIPGRIDX == 0 then

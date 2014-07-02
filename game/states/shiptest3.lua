@@ -14,6 +14,8 @@ function Shiptest3:enter()
     G_ECSMANAGER = Lecs.Manager:new() 
     G_CAMERA = Camera(love.graphics.getWidth()/2,love.graphics.getHeight()/2)
     G_VIEW = 0
+    G_BLOCKWIDTH = 65
+    G_BLOCKHEIGHT = 65
     
     local ship = game.entities.Ship:new(200, 200, 0)
     ship:addShipBlock(
@@ -91,8 +93,7 @@ function Shiptest3:update(DT)
     end
 end
 
-function Shiptest3:draw()
-    
+function Shiptest3:draw()    
     G_CAMERA:attach()
     G_ECSMANAGER:draw(DT)
     G_CAMERA:detach()

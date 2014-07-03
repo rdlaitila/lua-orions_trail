@@ -19,6 +19,18 @@ function Manager:draw()
     end
 end
 
+function Manager:keypressed(KEY, ISREPEAT)
+    for a=1, #self._systems do
+        self._systems[a]:keypressed(KEY, ISREPEAT)
+    end
+end
+
+function Manager:mousepressed(X, Y, MB)
+   for a=1, #self._systems do
+        self._systems[a]:mousepressed(X, Y, MB)
+    end
+end
+
 function Manager:addEntity(...)
     local entityargs = {...}
     

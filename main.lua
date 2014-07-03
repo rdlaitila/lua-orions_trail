@@ -17,10 +17,9 @@ require('game.states.shiptest2')
 require('game.states.shiptest3')
 
 function love.load()
+    --local width, height = love.window.getDesktopDimensions()
+    --love.window.setMode(width, height, {fullscreen=true})
+    
     Gamestate.registerEvents()
     Gamestate.switch(game.states.Mainmenu)
-end
-
-function love.draw()
-   love.graphics.print('Memory actually used (in MB): ' .. collectgarbage('count')/1024, 10,10)
 end

@@ -11,4 +11,13 @@ end
 function System:draw()
 end
 
+function System:keypressed(KEY, ISREPEAT)
+end
+
+function System:keyreleased(KEY)
+end
+
+function System:mousepressed(X, Y, MB)   
+end
+
 return System

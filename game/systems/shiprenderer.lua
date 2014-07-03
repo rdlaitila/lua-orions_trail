@@ -2,12 +2,17 @@ local ShipRenderer = Class('ShipRenderer', Lecs.System)
 
 function ShipRenderer:initialize(PRIORITY)
     Lecs.System.initialize(self, PRIORITY)
+    
+    self.debug = true
 end
 
-function ShipRenderer:update(DT)    
+function ShipRenderer:update(DT) 
+    local ships = self._ecsManager:getEntitiesWithTag("ship")
 end
 
-function ShipRenderer:draw()
+function ShipRenderer:draw()   
+    G_CAMERA:attach()    
+    
     local ships = self._ecsManager:getEntitiesWithTag("ship")
     
     if G_VIEW == 1 then
@@ -21,51 +26,59 @@ function ShipRenderer:draw()
     end
     
     for a=1, #ships do
-        local shipcenterx, shipcentery = ships[a].box2dBody:getWorldCenter()
-        love.graphics.circle("fill", shipcenterx, shipcentery, 5)
-        love.graphics.print("Ship Rotation: "..tostring(ships[a].box2dBody:getAngle()), 100, 100)
-        
-        -- DO BLOCK DRAWS
-        local bottomygrid = 0
-        for b=1, #ships[a].blockList do
-            local block = ships[a].blockList[b]
+        if ships[a].renderCanvasDirty then
+            love.graphics.setCanvas(ships[a].renderCanvas)           
             
-            if block.y > bottomygrid then bottomygrid = block.y end
+            if self.debug then
+                local shipcenterx, shipcentery = ships[a].box2dBody:getWorldCenter()
+                love.graphics.circle("fill", shipcenterx, shipcentery, 5)        
+            end
             
-            local spritex, spritey = ships[a]:getShipGridXYWorld(block.x, block.y, -1*G_BLOCKWIDTH/2, -1*G_BLOCKHEIGHT/2)
+            -- DO BLOCK DRAWS
+            local bottomygrid = 0
+            for b=1, #ships[a].blockList do
+                local block = ships[a].blockList[b]
+                
+                if block.y > bottomygrid then bottomygrid = block.y end
+                
+                local spritex, spritey = ships[a]:getShipGridXYWorld(block.x, block.y, -1*G_BLOCKWIDTH/2, -1*G_BLOCKHEIGHT/2)
+                love.graphics.draw(                
+                    block.sprite, 
+                    spritex, 
+                    spritey, 
+                    ships[a].box2dBody:getAngle(), 
+                    G_BLOCKWIDTH/block.sprite:getWidth(), 
+                    G_BLOCKHEIGHT/block.sprite:getHeight()
+                )
+                
+                if self.debug then
+                    love.graphics.polygon('line', ships[a].box2dBody:getWorldPoints(block.box2dShape:getPoints()) )
+                    
+                    local pointx, pointy = ships[a]:getShipGridXYWorld(block.x, block.y)
+                    love.graphics.circle("fill", pointx, pointy, 10)
+                end
+            end
             
-            love.graphics.draw(
-                game.entities.ShipBlock.tileSetImage,
-                block.sprite, 
-                spritex, 
-                spritey, 
-                ships[a].box2dBody:getAngle(), 
-                G_BLOCKWIDTH, 
-                G_BLOCKHEIGHT
+            ships[a].renderCanvasDirty = false
+            love.graphics.setCanvas()           
+        else
+            love.graphics.rectangle(
+                "line", 
+                ships[a].box2dBody:getX() - ships[a].renderCanvasLeft,
+                ships[a].box2dBody:getY() - ships[a].renderCanvasTop,
+                ships[a].renderCanvas:getWidth(),
+                ships[a].renderCanvas:getHeight()
             )
-            
-            love.graphics.polygon('line', ships[a].box2dBody:getWorldPoints(block.box2dShape:getPoints()) )
-            
-            local pointx, pointy = ships[a]:getShipGridXYWorld(block.x, block.y)
-            love.graphics.circle("fill", pointx, pointy, 10)
+            love.graphics.draw(
+                ships[a].renderCanvas, 
+                ships[a].box2dBody:getX() - ships[a].renderCanvasLeft, 
+                ships[a].box2dBody:getY() - ships[a].renderCanvasTop,
+                ships[a].box2dBody:getAngle()
+            )
         end
-        
-        local text1x, text1y = ships[a]:getShipGridXYWorld(0, bottomygrid+1)
-        love.graphics.print("R: "..tostring(ships[a].box2dBody:getAngle()), text1x, text1y, ships[a].box2dBody:getAngle())
-        local text2x, text2y = ships[a]:getShipGridXYWorld(0, bottomygrid+1, 0, 15)
-        love.graphics.print("X: "..tostring(ships[a].box2dBody:getX()), text2x, text2y, ships[a].box2dBody:getAngle())
-        local text3x, text3y = ships[a]:getShipGridXYWorld(0, bottomygrid+1, 0, 30)
-        love.graphics.print("Y: "..tostring(ships[a].box2dBody:getY()), text3x, text3y, ships[a].box2dBody:getAngle())
-        local text4x, text4y = ships[a]:getShipGridXYWorld(0, bottomygrid+1, 0, 45)
-        love.graphics.print("M: "..tostring(ships[a].box2dBody:getMass()), text4x, text4y, ships[a].box2dBody:getAngle())
-        
-        local vx, vy = ships[a].box2dBody:getLinearVelocity()
-        
-        local text5x, text5y = ships[a]:getShipGridXYWorld(0, bottomygrid+1, 0, 60)
-        love.graphics.print("XV: "..tostring(vx), text5x, text5y, ships[a].box2dBody:getAngle())
-        local text6x, text6y = ships[a]:getShipGridXYWorld(0, bottomygrid+1, 0, 75)
-        love.graphics.print("XY: "..tostring(vy), text6x, text6y, ships[a].box2dBody:getAngle())
     end
+    
+    G_CAMERA:detach()
 end
 
 game.systems.ShipRenderer = ShipRenderer

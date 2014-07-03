@@ -1,15 +1,6 @@
 local ShipBlock = Class("ShipBlock", Lecs.Entity)
 
-ShipBlock.tileSetImage = love.graphics.newImage("game//assets//blocksprites//blockgroup01.png")
-ShipBlock.tileSetBatch = love.graphics.newSpriteBatch(ShipBlock.tileSetImage, 65 * 65)
-ShipBlock.tileSetQuads = {}
-
-for a=1, 16 do
-    for b=1, 16 do        
-        local quad = love.graphics.newQuad( a*65, b*65, 65, 65, 65, 65)
-        table.insert(ShipBlock.tileSetQuads, {quad} )
-    end
-end
+ShipBlock.sprite = love.graphics.newImage("game//assets//blocksprites//hullblock01.png")
 
 function ShipBlock:initialize(BLOCK_TYPE, GRIDPOS_X, GRIDPOS_Y, GRIDPOS_R, SHAPE_TYPE)
     Lecs.Entity.initialize(self)
@@ -35,7 +26,9 @@ function ShipBlock:initialize(BLOCK_TYPE, GRIDPOS_X, GRIDPOS_Y, GRIDPOS_R, SHAPE
     
     self.box2dFixtureDensity = 100
     
-    self.sprite = ShipBlock.tileSetQuads[1][1]
+    self.sprite = ShipBlock.sprite
+    
+    self.drawEnabled = false
 end
 
 game.entities.ShipBlock = ShipBlock

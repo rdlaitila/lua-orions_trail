@@ -24,7 +24,7 @@ function Hullblock01:initialize(BLOCK_TYPE, GRIDPOS_X, GRIDPOS_Y, GRIDPOS_R, SHA
     
     self.box2dFixtureDensity = 500
     
-    self.sprite = game.entities.ShipBlock.tileSetQuads[1][1]
+    self.sprite = game.entities.ShipBlock.sprite
 end
 
 game.entities.Hullblock01 = Hullblock01

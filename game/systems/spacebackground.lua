@@ -33,15 +33,14 @@ function SpaceBackground:update(DT)
 end
 
 function SpaceBackground:draw() 
-    G_CAMERA:detach()     
+    G_CAMERA:attach()     
+    G_CAMERA:detach()
     
     love.graphics.draw(SpaceBackground.sprite, 0, 0)    
     
     for k, _ in ipairs(self.stars) do      
         love.graphics.circle("fill", self.stars[k].x, self.stars[k].y, 1)
     end
-    
-    G_CAMERA:attach()
 end
 
 game.systems.SpaceBackground = SpaceBackground

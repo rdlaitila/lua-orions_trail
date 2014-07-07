@@ -18,23 +18,14 @@ function Shiptest3:enter()
     G_BLOCKWIDTH = 65
     G_BLOCKHEIGHT = 65
     G_BLOCKDIAGLENGTH = math.sqrt(math.pow(G_BLOCKWIDTH, 2) + math.pow(G_BLOCKHEIGHT,2))
-    print(G_BLOCKDIAGLENGTH)
     
     local ship = game.entities.Ship:new(200, 200, 0)    
     for a=1, 5 do
         for b=1, 5 do
-            ship:addShipBlock(game.entities.Hullblock01:new("HULL_BLOCK", a, b))
+            ship:addShipBlock(game.entities.Hullblock01:new("HULL_BLOCK"), a, b)
         end
     end
-    ship:computeRenderCanvas()
-    G_ECSMANAGER:addEntity(ship)
-    
-    local ship = game.entities.Ship:new(500, 500, 0)    
-    for a=1, 5 do
-        for b=1, 5 do
-            ship:addShipBlock(game.entities.Hullblock01:new("HULL_BLOCK", a, b))
-        end
-    end
+    ship:normalizeBlockGrid()    
     ship:computeRenderCanvas()
     G_ECSMANAGER:addEntity(ship)
     

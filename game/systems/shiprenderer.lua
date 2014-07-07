@@ -26,54 +26,17 @@ function ShipRenderer:draw()
     end
     
     for a=1, #ships do
-        if ships[a].renderCanvasDirty then
-            love.graphics.setCanvas(ships[a].renderCanvas)           
-            
-            if self.debug then
-                local shipcenterx, shipcentery = ships[a].box2dBody:getWorldCenter()
-                love.graphics.circle("fill", shipcenterx, shipcentery, 5)        
-            end
-            
-            -- DO BLOCK DRAWS
-            local bottomygrid = 0
-            for b=1, #ships[a].blockList do
-                local block = ships[a].blockList[b]
-                
-                if block.y > bottomygrid then bottomygrid = block.y end
-                
-                local spritex, spritey = ships[a]:getShipGridXYWorld(block.x, block.y, -1*G_BLOCKWIDTH/2, -1*G_BLOCKHEIGHT/2)
-                love.graphics.draw(                
-                    block.sprite, 
-                    spritex, 
-                    spritey, 
-                    ships[a].box2dBody:getAngle(), 
-                    G_BLOCKWIDTH/block.sprite:getWidth(), 
-                    G_BLOCKHEIGHT/block.sprite:getHeight()
-                )
-                
-                if self.debug then
-                    love.graphics.polygon('line', ships[a].box2dBody:getWorldPoints(block.box2dShape:getPoints()) )
-                    
-                    local pointx, pointy = ships[a]:getShipGridXYWorld(block.x, block.y)
-                    love.graphics.circle("fill", pointx, pointy, 10)
-                end
-            end
-            
+        if ships[a].renderCanvasDirty then            
             ships[a].renderCanvasDirty = false
-            love.graphics.setCanvas()           
         else
+            local bounds = {ships[a]:getBlockGridBounds()}
+            local canvasx, canvasy = ships[a]:getBlockGridPixelCoords("world", bounds[1], bounds[2], -1*G_BLOCKWIDTH/2, -1*G_BLOCKHEIGHT/2)
             love.graphics.rectangle(
                 "line", 
-                ships[a].box2dBody:getX() - ships[a].renderCanvasLeft,
-                ships[a].box2dBody:getY() - ships[a].renderCanvasTop,
-                ships[a].renderCanvas:getWidth(),
-                ships[a].renderCanvas:getHeight()
-            )
-            love.graphics.draw(
-                ships[a].renderCanvas, 
-                ships[a].box2dBody:getX() - ships[a].renderCanvasLeft, 
-                ships[a].box2dBody:getY() - ships[a].renderCanvasTop,
-                ships[a].box2dBody:getAngle()
+                canvasx,
+                canvasy,
+                math.abs(bounds[1]) + math.abs(bounds[3]) * G_BLOCKWIDTH,
+                math.abs(bounds[2]) + math.abs(bounds[4]) * G_BLOCKHEIGHT
             )
         end
     end

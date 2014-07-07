@@ -2,16 +2,12 @@ local ShipBlock = Class("ShipBlock", Lecs.Entity)
 
 ShipBlock.sprite = love.graphics.newImage("game//assets//blocksprites//hullblock01.png")
 
-function ShipBlock:initialize(BLOCK_TYPE, GRIDPOS_X, GRIDPOS_Y, GRIDPOS_R, SHAPE_TYPE)
+function ShipBlock:initialize(BLOCK_TYPE)
     Lecs.Entity.initialize(self)
     
     self:addTag("block")
     
-    self.type = BLOCK_TYPE
-    
-    self.x = GRIDPOS_X
-    
-    self.y = GRIDPOS_Y    
+    self.type = BLOCK_TYPE 
     
     self.box2dMesh = {
         {10, 0},

@@ -1,15 +1,11 @@
 local Hullblock01 = Class("Hullblock01", game.entities.ShipBlock)
 
-function Hullblock01:initialize(BLOCK_TYPE, GRIDPOS_X, GRIDPOS_Y, GRIDPOS_R, SHAPE_TYPE)
-    game.entities.ShipBlock.initialize(self, BLOCK_TYPE, GRIDPOS_X, GRIDPOS_Y, GRIDPOS_R, SHAPE_TYPE)
+function Hullblock01:initialize()
+    game.entities.ShipBlock.initialize(self, "HULL_BLOCK")
     
     self:addTag("block")
     
     self.type = BLOCK_TYPE
-    
-    self.x = GRIDPOS_X
-    
-    self.y = GRIDPOS_Y    
     
     self.box2dMesh = {
         {0, 0},

@@ -7,8 +7,6 @@ function Ship:initialize(X,Y,ROT)
     
     self.box2dBody = love.physics.newBody(G_BOX2DWORLD, X, Y, "dynamic")
     
-    self.blockGrid = {{}}
-    
     self.blockList = {}
     
     self.thrustMultiplier = 20
@@ -19,19 +17,12 @@ function Ship:initialize(X,Y,ROT)
 end
 
 function Ship:addShipBlock(BLOCK, XGRIDPOS, YGRIDPOS)
-    if self.blockGrid[XGRIDPOS] == nil then
-        self.blockGrid[XGRIDPOS] = {}
-    end
-    
-    if self.blockGrid[XGRIDPOS][YGRIDPOS] == nil then
-        self.blockGrid[XGRIDPOS][YGRIDPOS] = {}
-    end
     
     local meshPoints = {}
         
     for a=1, #BLOCK.box2dMesh do
-        local pointx = BLOCK.box2dMesh[a][1] - (G_BLOCKWIDTH/2)
-        local pointy = BLOCK.box2dMesh[a][2] - (G_BLOCKHEIGHT/2)
+        local pointx = BLOCK.box2dMesh[a][1]
+        local pointy = BLOCK.box2dMesh[a][2]
         
         --local newx, newy = self:getShipGridXYRelative(XGRIDPOS, YGRIDPOS)
         local newx, newy = self:getBlockGridPixelCoords("relative", XGRIDPOS, YGRIDPOS)
@@ -44,9 +35,12 @@ function Ship:addShipBlock(BLOCK, XGRIDPOS, YGRIDPOS)
       
     BLOCK.box2dFixture = love.physics.newFixture( self.box2dBody, BLOCK.box2dShape, BLOCK.box2dFixtureDensity )
     
-    table.insert(self.blockGrid[XGRIDPOS][YGRIDPOS], BLOCK)
+    BLOCK.blockGridX = XGRIDPOS
     
-    print(self.blockGrid[XGRIDPOS][YGRIDPOS][1].type)
+    BLOCK.blockGridY = YGRIDPOS
+    
+    --table.insert(self.blockGrid[XGRIDPOS][YGRIDPOS], BLOCK)
+    table.insert(self.blockList, BLOCK)
 end
 
 function Ship:getBlockGridBounds()
@@ -55,33 +49,19 @@ function Ship:getBlockGridBounds()
     local highx = 0
     local highy = 0
     
-    for index1 in pairs(self.blockGrid) do
-        if index1 < lowx then 
-            lowx = index1 
-        elseif index1 > highx then
-            highx = index1
-        end
-        
-        for index2 in pairs(self.blockGrid[index1]) do
-            if index2 < lowy then 
-                lowy = index2 
-            elseif index2 > highy then
-                highy = index2
-            end
+    for index, value in pairs(self.blockList) do
+        if value.blockGridX < lowx then 
+            lowx = value.blockGridX 
+        elseif value.blockGridX > highx then
+            highx = value.blockGridX
+        elseif value.blockGridY < lowy then
+            lowy = value.blockGridY
+        elseif value.blockGridY > highy then
+            highy = value.blockGridY
         end
     end
     
     return lowx, lowy, highx, highy
-end
-
-function Ship:normalizeBlockGrid()
-    local left, top, right, bottom = self:getBlockGridBounds()
-    for a=left, right do
-        if self.blockGrid[a] == nil then self.blockGrid[a] = {} end                
-        for b=top, bottom do
-            if self.blockGrid[a][b] == nil then self.blockGrid[a][b] = {} end
-        end
-    end
 end
 
 function Ship:computeRenderCanvas()

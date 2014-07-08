@@ -2,8 +2,7 @@ local Shiptest3 = {}
 
 function Shiptest3:enter()
     require('game.entities.ship')
-    require('game.entities.shipblock')
-    require('game.entities.hullblock01')
+    require('game.entities.shipblock')    
     require('game.systems.coresystem')
     require('game.systems.camera')
     require('game.systems.entitydebug')
@@ -21,11 +20,10 @@ function Shiptest3:enter()
     
     local ship = game.entities.Ship:new(200, 200, 0)    
     for a=1, 5 do
-        for b=1, 5 do
-            ship:addShipBlock(game.entities.Hullblock01:new("HULL_BLOCK"), a, b)
+        for b=1, 5 do            
+            ship:addShipBlock(game.entities.ShipBlock:new("HULL_BLOCK"), a, b)
         end
     end
-    ship:normalizeBlockGrid()    
     ship:computeRenderCanvas()
     G_ECSMANAGER:addEntity(ship)
     

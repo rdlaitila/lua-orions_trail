@@ -29,8 +29,8 @@ function ShipRenderer:draw()
         if ships[a].renderCanvasDirty then            
             ships[a].renderCanvasDirty = false
         else
-            local bounds = {ships[a]:getBlockGridBounds()}
-            local canvasx, canvasy = ships[a]:getBlockGridPixelCoords("world", bounds[1], bounds[2], -1*G_BLOCKWIDTH/2, -1*G_BLOCKHEIGHT/2)
+            local bounds = {ships[a]:getBlockGridBounds()}            
+            local canvasx, canvasy = ships[a]:getBlockGridPixelCoords("world", bounds[1], bounds[2])
             love.graphics.rectangle(
                 "line", 
                 canvasx,
@@ -38,6 +38,13 @@ function ShipRenderer:draw()
                 math.abs(bounds[1]) + math.abs(bounds[3]) * G_BLOCKWIDTH,
                 math.abs(bounds[2]) + math.abs(bounds[4]) * G_BLOCKHEIGHT
             )
+            
+            for b=1, #ships[a].blockList do                
+                local blockpixelx, blockpixely = ships[a]:getBlockGridPixelCoords("world", ships[a].blockList[b].blockGridX, ships[a].blockList[b].blockGridY)
+                love.graphics.circle('line', blockpixelx, blockpixely, 5)
+            end
+            
+            love.graphics.circle('fill', ships[a].box2dBody:getX(), ships[a].box2dBody:getY(), 5)
         end
     end
     

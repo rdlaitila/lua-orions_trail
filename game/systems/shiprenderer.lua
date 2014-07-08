@@ -26,21 +26,62 @@ function ShipRenderer:draw()
     end
     
     for a=1, #ships do
-        if ships[a].renderCanvasDirty then            
+        if ships[a].renderCanvasDirty then          
+            
+            for b=1, #ships[a].blockList do
+                love.graphics.setCanvas(ships[a].renderCanvas)
+                
+                love.graphics.line(0, 0, ships[a].renderCanvas:getWidth(), ships[a].renderCanvas:getHeight())
+                
+                local spritepixelx, spritepixely = ships[a]:getBlockGridPixelCoords(
+                    "relative", 
+                    ships[a].blockList[b].blockGridX,
+                    ships[a].blockList[b].blockGridY,
+                    -1*G_BLOCKWIDTH/2,
+                    -1*G_BLOCKHEIGHT/2
+                )
+                
+                love.graphics.draw(
+                    ships[a].blockList[b].sprite, 
+                    math.abs(spritepixelx) - G_BLOCKWIDTH/2, 
+                    math.abs(spritepixely) - G_BLOCKHEIGHT/2, 
+                    0,
+                    1,
+                    1
+                )
+            end
+            
             ships[a].renderCanvasDirty = false
-        else
-            local bounds = {ships[a]:getBlockGridBounds()}            
-            local canvasx, canvasy = ships[a]:getBlockGridPixelCoords("world", bounds[1], bounds[2])
-            love.graphics.rectangle(
+            love.graphics.setCanvas()
+        else           
+            local bounds = {ships[a]:getBlockGridBounds()}
+            local canvasx, canvasy = ships[a]:getBlockGridPixelCoords("world", bounds[1], bounds[2], -32.5, -32.5, true)
+            --[[love.graphics.rectangle(
                 "line", 
+                canvasx - G_BLOCKWIDTH/2,
+                canvasy - G_BLOCKHEIGHT/2,
+                ships[a].renderCanvas:getWidth(),
+                ships[a].renderCanvas:getHeight()
+            )]]
+            love.graphics.draw(
+                ships[a].renderCanvas, 
                 canvasx,
                 canvasy,
-                math.abs(bounds[1]) + math.abs(bounds[3]) * G_BLOCKWIDTH,
-                math.abs(bounds[2]) + math.abs(bounds[4]) * G_BLOCKHEIGHT
+                ships[a].box2dBody:getAngle()
             )
             
             for b=1, #ships[a].blockList do                
-                local blockpixelx, blockpixely = ships[a]:getBlockGridPixelCoords("world", ships[a].blockList[b].blockGridX, ships[a].blockList[b].blockGridY)
+                local blockpixelx, blockpixely = ships[a]:getBlockGridPixelCoords(
+                    "world", 
+                    ships[a].blockList[b].blockGridX, 
+                    ships[a].blockList[b].blockGridY,
+                    0,
+                    0,
+                    true
+                )
+                
+                love.graphics.polygon('line', ships[a].box2dBody:getWorldPoints(ships[a].blockList[b].box2dShape:getPoints()))
+                
                 love.graphics.circle('line', blockpixelx, blockpixely, 5)
             end
             

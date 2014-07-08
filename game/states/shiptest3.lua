@@ -18,7 +18,7 @@ function Shiptest3:enter()
     G_BLOCKHEIGHT = 65
     G_BLOCKDIAGLENGTH = math.sqrt(math.pow(G_BLOCKWIDTH, 2) + math.pow(G_BLOCKHEIGHT,2))
     
-    local ship = game.entities.Ship:new(200, 200, 0)    
+    local ship = game.entities.Ship:new(100, 100, 0)    
     for a=1, 5 do
         for b=1, 5 do            
             ship:addShipBlock(game.entities.ShipBlock:new("HULL_BLOCK"), a, b)
@@ -27,28 +27,14 @@ function Shiptest3:enter()
     ship:computeRenderCanvas()
     G_ECSMANAGER:addEntity(ship)
     
-    --[[ship:addShipBlock(
-        game.entities.Hullblock01:new("HULL_BLOCK", 0, 0),
-        game.entities.Hullblock01:new("HULL_BLOCK", 1, 0),
-        game.entities.Hullblock01:new("HULL_BLOCK", -1, 0),
-        game.entities.Hullblock01:new("HULL_BLOCK", 0, 1),
-        game.entities.Hullblock01:new("HULL_BLOCK", 0, -1),
-        game.entities.Hullblock01:new("HULL_BLOCK", -1, 1),
-        game.entities.Hullblock01:new("HULL_BLOCK", -1, -1),
-        game.entities.Hullblock01:new("HULL_BLOCK", -2, 1),
-        game.entities.Hullblock01:new("HULL_BLOCK", -2, -1)
-    )]]
-    
-    --[[local ship2 = game.entities.Ship:new(500, 200, 0)
-    ship2:addShipBlock(
-        game.entities.ShipBlock:new("HULL_BLOCK", 0, 0),
-        game.entities.ShipBlock:new("HULL_BLOCK", 1, 0),
-        game.entities.ShipBlock:new("HULL_BLOCK", -1, 0),
-        game.entities.ShipBlock:new("HULL_BLOCK", 0, 1),
-        game.entities.ShipBlock:new("HULL_BLOCK", 0, -1)
-    )]]
-    
-    
+    local ship = game.entities.Ship:new(500, 500, 0)    
+    for a=1, 5 do
+        for b=1, 5 do            
+            ship:addShipBlock(game.entities.ShipBlock:new("HULL_BLOCK"), a, b)
+        end
+    end
+    ship:computeRenderCanvas()
+    G_ECSMANAGER:addEntity(ship)
     
     G_ECSMANAGER:addSystem(        
         game.systems.SpaceBackground:new(0),

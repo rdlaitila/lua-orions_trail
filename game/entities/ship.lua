@@ -16,8 +16,7 @@ function Ship:initialize(X,Y,ROT)
     self.renderCanvasDirty = true
 end
 
-function Ship:addShipBlock(BLOCK, XGRIDPOS, YGRIDPOS)
-    
+function Ship:addShipBlock(BLOCK, XGRIDPOS, YGRIDPOS)    
     local meshPoints = {}
         
     for a=1, #BLOCK.box2dMesh do
@@ -67,15 +66,17 @@ end
 function Ship:computeRenderCanvas()
     local left, top, right, bottom = self:getBlockGridBounds()
     
-    local canvaswidth = math.abs(left) + math.abs(right) * G_BLOCKWIDTH
-    local canvasheight = math.abs(top) + math.abs(bottom) * G_BLOCKHEIGHT
+    local canvaswidth = (math.abs(left) + math.abs(right) * G_BLOCKWIDTH) + G_BLOCKWIDTH
+    local canvasheight = (math.abs(top) + math.abs(bottom) * G_BLOCKHEIGHT) + G_BLOCKHEIGHT
     
     self.renderCanvas = love.graphics.newCanvas(canvaswidth, canvasheight)
     self.renderCanvasDirty = true
 end
 
-function Ship:getBlockGridPixelCoords(TYPE, SHIPGRIDX, SHIPGRIDY, OFFSETX, OFFSETY)
+function Ship:getBlockGridPixelCoords(TYPE, SHIPGRIDX, SHIPGRIDY, OFFSETX, OFFSETY, APPLY_ROTATION)
     local shipx, shipy = 0
+    local shipr = self.box2dBody:getAngle()
+    
     if TYPE == "relative" then
         shipx = 0
         shipy = 0
@@ -104,13 +105,13 @@ function Ship:getBlockGridPixelCoords(TYPE, SHIPGRIDX, SHIPGRIDY, OFFSETX, OFFSE
         newgridy = shipy + (blockheight*SHIPGRIDY) + OFFSETY
     end 
     
-    return newgridx, newgridy
-    
-    -- NO LONGER ROTATE BY SHIP ANGLE, AS WE ROTATE THE CANVAS DURING DRAW
-    --local nx = shipx + ( math.cos(shipr) * (newgridx - shipx) - math.sin(shipr) * (newgridy - shipy) )
-    --local ny = shipy + ( math.sin(shipr) * (newgridx - shipx) + math.cos(shipr) * (newgridy - shipy) )
-    
-    --return nx, ny
+    if APPLY_ROTATION == true then
+        local nx = shipx + ( math.cos(shipr) * (newgridx - shipx) - math.sin(shipr) * (newgridy - shipy) )
+        local ny = shipy + ( math.sin(shipr) * (newgridx - shipx) + math.cos(shipr) * (newgridy - shipy) )    
+        return nx, ny
+    else
+        return newgridx, newgridy
+    end    
 end
 
 function Ship:thrustAhead()

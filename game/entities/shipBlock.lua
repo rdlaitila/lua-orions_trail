@@ -10,10 +10,10 @@ function ShipBlock:initialize(BLOCK_TYPE)
     self.type = BLOCK_TYPE 
     
     self.box2dMesh = {
-        {-20, -20},
-        {20, -20},
-        {20, 20},
-        {-20, 20}
+        {-32.5, -32.5},
+        {32.5, -32.5},
+        {32.5, 32.5},
+        {-32.5, 32.5}
     }
     
     self.blockGridX = 0

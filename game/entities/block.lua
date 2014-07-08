@@ -1,13 +1,11 @@
-local ShipBlock = Class("ShipBlock", Lecs.Entity)
+local Block = Class("Block", Lecs.Entity)
 
-ShipBlock.sprite = love.graphics.newImage("game//assets//blocksprites//hullblock01.png")
+Block.sprite = love.graphics.newImage("game//assets//blocksprites//hullblock01.png")
 
-function ShipBlock:initialize(BLOCK_TYPE)
+function Block:initialize()
     Lecs.Entity.initialize(self)
     
     self:addTag("block")
-    
-    self.type = BLOCK_TYPE 
     
     self.box2dMesh = {
         {-32.5, -32.5},
@@ -26,9 +24,9 @@ function ShipBlock:initialize(BLOCK_TYPE)
     
     self.box2dFixtureDensity = 100
     
-    self.sprite = ShipBlock.sprite
+    self.sprite = Block.sprite
     
     self.drawEnabled = false
 end
 
-game.entities.ShipBlock = ShipBlock
+game.entities.Block = Block

@@ -1,8 +1,8 @@
 local Shiptest3 = {}
 
 function Shiptest3:enter()
-    require('game.entities.ship')
-    require('game.entities.shipblock')    
+    require('game.entities.blockgroup')
+    require('game.entities.block')    
     require('game.systems.coresystem')
     require('game.systems.camera')
     require('game.systems.entitydebug')
@@ -18,21 +18,17 @@ function Shiptest3:enter()
     G_BLOCKHEIGHT = 65
     G_BLOCKDIAGLENGTH = math.sqrt(math.pow(G_BLOCKWIDTH, 2) + math.pow(G_BLOCKHEIGHT,2))
     
-    local ship = game.entities.Ship:new(100, 100, 0)    
-    for a=1, 5 do
-        for b=1, 5 do            
-            ship:addShipBlock(game.entities.ShipBlock:new("HULL_BLOCK"), a, b)
-        end
-    end
+    local ship = game.entities.BlockGroup:new(100, 100, 0)    
+    ship:addBlock(game.entities.Block:new(), 0, 0)    
+    ship:addBlock(game.entities.Block:new(), -1, 0)
+    ship:addBlock(game.entities.Block:new(), 1, 0)
+    ship:addBlock(game.entities.Block:new(), 0, 1)
+    ship:addBlock(game.entities.Block:new(), 0, -1)
     ship:computeRenderCanvas()
     G_ECSMANAGER:addEntity(ship)
     
-    local ship = game.entities.Ship:new(500, 500, 0)    
-    for a=1, 5 do
-        for b=1, 5 do            
-            ship:addShipBlock(game.entities.ShipBlock:new("HULL_BLOCK"), a, b)
-        end
-    end
+    ship = game.entities.BlockGroup:new(500, 500, 0)    
+    ship:addBlock(game.entities.Block:new(), 0, 0)
     ship:computeRenderCanvas()
     G_ECSMANAGER:addEntity(ship)
     

@@ -14,12 +14,10 @@ function Ship:initialize(X,Y,ROT)
 end
 
 function Ship:thrustAhead()
-    self.isThrustingAhead = true
     local thrust_force = self.box2dBody:getMass() * self.thrustMultiplier
     local thrust_x = math.cos(self.box2dBody:getAngle())*thrust_force
     local thrust_y = math.sin(self.box2dBody:getAngle())*thrust_force        
     self.box2dBody:applyForce(thrust_x, thrust_y)
-    self.isThrustingAhead = false
 end
 
 function Ship:thrustStern()

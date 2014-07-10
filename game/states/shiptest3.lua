@@ -61,18 +61,30 @@ function Shiptest3:update(DT)
     
     if love.keyboard.isDown("w") then        
         ship:thrustAhead()
+        ship.isThrustingAhead = true
+    else
+        ship.isThrustingAhead = false
     end
     
     if love.keyboard.isDown("s") then
        ship:thrustStern()
+       ship.isThrustingStern = true
+    else
+        ship.isThrustingStern = false
     end
     
     if love.keyboard.isDown("a") then
        ship:thrustPort() 
+       ship.isThrustingPort = true
+    else
+        ship.isThrustingPort = false
     end
     
     if love.keyboard.isDown("d") then
        ship:thrustStarboard()
+       ship.isThrustingStarboard = true
+    else
+        ship.isThrustingStarboard = false
     end
 end
 

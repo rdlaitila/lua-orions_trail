@@ -3,11 +3,14 @@ local Shiptest3 = {}
 function Shiptest3:enter()
     require('game.entities.blockgroup')
     require('game.entities.block')    
+    require('game.entities.ship')    
     require('game.systems.coresystem')
     require('game.systems.camera')
     require('game.systems.entitydebug')
+    require('game.systems.blockgrouprenderer')
     require('game.systems.shiprenderer')
     require('game.systems.spacebackground')
+    require('game.systems.physicscollisions')
     
     -- Setup state globals
     G_BOX2DWORLD = love.physics.newWorld(0, 0, true)
@@ -18,29 +21,27 @@ function Shiptest3:enter()
     G_BLOCKHEIGHT = 65
     G_BLOCKDIAGLENGTH = math.sqrt(math.pow(G_BLOCKWIDTH, 2) + math.pow(G_BLOCKHEIGHT,2))
     
-    local ship = game.entities.BlockGroup:new(100, 100, 0)    
-    --[[ship:addBlock(game.entities.Block:new(), 0, 0)    
+    local ship = game.entities.Ship:new(100, 100, 0)    
+    ship:addBlock(game.entities.Block:new(), 0, 0)    
     ship:addBlock(game.entities.Block:new(), -1, 0)
     ship:addBlock(game.entities.Block:new(), 1, 0)
     ship:addBlock(game.entities.Block:new(), 0, 1)
-    ship:addBlock(game.entities.Block:new(), 0, -1)]]
-    for a=-100, 100 do
-        for b=-10, 10 do
-            ship:addBlock(game.entities.Block:new(), a, b)
-        end
-    end
+    ship:addBlock(game.entities.Block:new(), 0, -1)
+    
     ship:computeRenderCanvas()
     G_ECSMANAGER:addEntity(ship)
     
-    ship = game.entities.BlockGroup:new(500, 500, 0)    
+    ship = game.entities.Ship:new(500, 500, 0)    
     ship:addBlock(game.entities.Block:new(), 0, 0)
     ship:computeRenderCanvas()
     G_ECSMANAGER:addEntity(ship)
     
     G_ECSMANAGER:addSystem(        
         game.systems.SpaceBackground:new(0),
-        game.systems.ShipRenderer:new(1),
-        game.systems.CameraSystem:new(2)
+        game.systems.PhysicsCollisions:new(1),
+        game.systems.BlockGroupRenderer:new(2),
+        game.systems.ShipRenderer:new(2),
+        game.systems.CameraSystem:new(3)
     )
 end
 

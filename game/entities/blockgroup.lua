@@ -3,13 +3,11 @@ local BlockGroup = Class("BlockGroup", Lecs.Entity)
 function BlockGroup:initialize(X,Y,ROT)
     Lecs.Entity.initialize(self)
     
-    self:addTag("ship")
+    self:addTag("blockgroup")
     
     self.box2dBody = love.physics.newBody(G_BOX2DWORLD, X, Y, "dynamic")
     
     self.blockList = {}
-    
-    self.thrustMultiplier = 20
     
     self.renderCanvas = love.graphics.newCanvas()
     
@@ -143,48 +141,6 @@ function BlockGroup:getBlockGridPixelCoords(TYPE, GRIDX, GRIDY, OFFSETX, OFFSETY
     else
         return newgridx, newgridy
     end    
-end
-
-function BlockGroup:thrustAhead()
-    local thrust_force = self.box2dBody:getMass() * self.thrustMultiplier
-    local thrust_x = math.cos(self.box2dBody:getAngle())*thrust_force
-    local thrust_y = math.sin(self.box2dBody:getAngle())*thrust_force        
-    self.box2dBody:applyForce(thrust_x, thrust_y)
-end
-
-function BlockGroup:thrustStern()
-    local thrust_force = self.box2dBody:getMass() * self.thrustMultiplier
-    local thrust_x = -1*math.cos(self.box2dBody:getAngle())*thrust_force
-    local thrust_y = -1*math.sin(self.box2dBody:getAngle())*thrust_force        
-    self.box2dBody:applyForce(thrust_x, thrust_y)
-end
-
-function BlockGroup:thrustPort()
-    local thrust_force = self.box2dBody:getMass() * self.thrustMultiplier
-    local deg = math.deg(self.box2dBody:getAngle()) + 90
-    local rad = math.rad(deg)
-    local thrust_x = -1*math.cos(rad)*(thrust_force)
-    local thrust_y = -1*math.sin(rad)*(thrust_force)
-    self.box2dBody:applyForce(thrust_x, thrust_y)
-end
-
-function BlockGroup:thrustStarboard()
-    local thrust_force = self.box2dBody:getMass() * self.thrustMultiplier
-    local deg = math.deg(self.box2dBody:getAngle()) + 90
-    local rad = math.rad(deg)
-    local thrust_x = math.cos(rad)*(thrust_force)
-    local thrust_y = math.sin(rad)*(thrust_force)   
-    self.box2dBody:applyForce(thrust_x, thrust_y)
-end
-
-function BlockGroup:thrustYawLeft()
-    local thrust_force = self.box2dBody:getMass() * self.thrustMultiplier
-    self.box2dBody:applyAngularImpulse( -1*(thrust_force*4) )    
-end
-
-function BlockGroup:thrustYawRight()
-    local thrust_force = self.box2dBody:getMass() * self.thrustMultiplier
-    self.box2dBody:applyAngularImpulse( (thrust_force*4) )
 end
 
 game.entities.BlockGroup = BlockGroup

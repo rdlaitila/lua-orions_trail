@@ -21,7 +21,7 @@ end
 
 function CameraSystem:mousepressed( x, y, mb )
    if mb == "wu" then              
-      G_CAMERA.scale = G_CAMERA.scale + 0.1    
+      G_CAMERA.scale = G_CAMERA.scale + 0.08 
    end
 
    if mb == "wd" then
@@ -29,7 +29,7 @@ function CameraSystem:mousepressed( x, y, mb )
             if G_CAMERA.scale < 1 then            
                 G_CAMERA.scale = G_CAMERA.scale * G_CAMERA.scale
             else
-                G_CAMERA.scale = G_CAMERA.scale - 0.1
+                G_CAMERA.scale = G_CAMERA.scale - 0.08
             end
         end
    end

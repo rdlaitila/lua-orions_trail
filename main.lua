@@ -17,8 +17,8 @@ require('game.states.shiptest2')
 require('game.states.shiptest3')
 
 function love.load()
-    --local width, height = love.window.getDesktopDimensions()
-    --love.window.setMode(width, height, {fullscreen=true})
+    local width, height = love.window.getDesktopDimensions()
+    love.window.setMode(width, height, {fullscreen=true})
     
     Gamestate.registerEvents()
     Gamestate.switch(game.states.Mainmenu)

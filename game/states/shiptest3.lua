@@ -22,11 +22,16 @@ function Shiptest3:enter()
     G_BLOCKDIAGLENGTH = math.sqrt(math.pow(G_BLOCKWIDTH, 2) + math.pow(G_BLOCKHEIGHT,2))
     
     local ship = game.entities.Ship:new(100, 100, 0)    
-    ship:addBlock(game.entities.Block:new(), 0, 0)    
+    --[[ship:addBlock(game.entities.Block:new(), 0, 0)    
     ship:addBlock(game.entities.Block:new(), -1, 0)
     ship:addBlock(game.entities.Block:new(), 1, 0)
     ship:addBlock(game.entities.Block:new(), 0, 1)
-    ship:addBlock(game.entities.Block:new(), 0, -1)
+    ship:addBlock(game.entities.Block:new(), 0, -1)]]
+    for a=1, 5 do
+        for b=1, 5 do
+            ship:addBlock(game.entities.Block:new(), a, b)
+        end
+    end
     
     ship:computeRenderCanvas()
     G_ECSMANAGER:addEntity(ship)

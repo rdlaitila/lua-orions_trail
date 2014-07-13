@@ -21,7 +21,7 @@ function BlockGroupRenderer:draw()
     elseif G_VIEW == 2 then
         G_CAMERA.x = blockgroups[1].box2dBody:getX()
         G_CAMERA.y = blockgroups[1].box2dBody:getY()
-        G_CAMERA.rot = math.rad(math.deg(blockgroups[1].box2dBody:getAngle()*-1) - 90)
+        G_CAMERA.rot = mat h.rad(math.deg(blockgroups[1].box2dBody:getAngle()*-1) - 90)
     end
     
     for a=1, #blockgroups do
@@ -46,8 +46,8 @@ function BlockGroupRenderer:draw()
                 )
             end            
             
-            for b=1, #blockgroups[a].blockList do
-                if self.debug then
+            if self.debug then
+                for b=1, #blockgroups[a].blockList do                
                     love.graphics.line(0, 0, blockgroups[a].renderCanvas:getWidth(), blockgroups[a].renderCanvas:getHeight())                
                     local left, top, right, bottom, totalwidth, totalheight = blockgroups[a]:getBlockGridBounds()                
                     for b=0, totalwidth do

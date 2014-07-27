@@ -1,10 +1,10 @@
-local CameraSystem = Class('CameraSystem', Lecs.System)
+local CameraSystem = class('CameraSystem', lecs.System)
 
 function CameraSystem:initialize(PRIORITY)
-    Lecs.System.initialize(self, PRIORITY)
+    lecs.System.initialize(self, PRIORITY)
 end
 
- function CameraSystem:update(DT)
+function CameraSystem:update(DT)         
     if love.keyboard.isDown("down") then 
         G_CAMERA.y = G_CAMERA.y + 10 / (G_CAMERA.scale)
     end
@@ -17,6 +17,11 @@ end
     if love.keyboard.isDown("left") then 
         G_CAMERA.x = G_CAMERA.x - 10 / (G_CAMERA.scale)
     end
+end
+
+function CameraSystem:draw()
+    G_CAMERA:attach()
+    G_CAMERA:detach()
 end
 
 function CameraSystem:mousepressed( x, y, mb )

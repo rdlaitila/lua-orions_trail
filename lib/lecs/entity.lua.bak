@@ -1,9 +1,9 @@
 local Entity = class("Entity")
 
 function Entity:initialize()
-    lecs.uuid.randomseed(os.time()) 
+    Lecs.uuid.randomseed(os.time()) 
     
-    self._id = lecs.uuid()    
+    self._id = Lecs.uuid()    
     self._ecsManager = nil
     self._components = {}
     self._tags = {}   

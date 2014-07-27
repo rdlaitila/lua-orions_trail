@@ -1,4 +1,4 @@
-local Ship = Class("Ship", game.entities.BlockGroup)
+local Ship = class("Ship", game.entities.BlockGroup)
 
 function Ship:initialize(X,Y,ROT)
     game.entities.BlockGroup.initialize(self, X, Y, ROT)

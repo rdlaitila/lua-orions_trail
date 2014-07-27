@@ -1,7 +1,7 @@
-local PhysicsCollisions = Class('PhysicsCollisions', Lecs.System)
+local PhysicsCollisions = class('PhysicsCollisions', lecs.System)
 
 function PhysicsCollisions:initialize(PRIORITY)
-    Lecs.System.initialize(self, PRIORITY)
+    lecs.System.initialize(self, PRIORITY)
     
     G_BOX2DWORLD:setCallbacks(
         self.beginContact, 

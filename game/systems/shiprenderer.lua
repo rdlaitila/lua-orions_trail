@@ -1,7 +1,7 @@
-local ShipRenderer = Class("ShipRenderer", Lecs.System)
+local ShipRenderer = class("ShipRenderer", lecs.System)
 
 function ShipRenderer:initialize(PRIORITY)
-    Lecs.System.initialize(self, PRIORITY)
+    lecs.System.initialize(self, PRIORITY)
 end
 
 function ShipRenderer:update(DT)

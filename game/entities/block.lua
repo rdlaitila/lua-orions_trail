@@ -1,17 +1,20 @@
-local Block = Class("Block", Lecs.Entity)
+local Block = class("Block", lecs.Entity)
 
 Block.sprite = love.graphics.newImage("game//assets//blocksprites//hullblock01.png")
 
 function Block:initialize()
-    Lecs.Entity.initialize(self)
+    lecs.Entity.initialize(self)
     
     self:addTag("block")
     
+    local halfblockwidth = G_BLOCKWIDTH/2
+    local halfblockheight = G_BLOCKHEIGHT/2
+    
     self.box2dMesh = {
-        {-32.5, -32.5},
-        {32.5, -32.5},
-        {32.5, 32.5},
-        {-32.5, 32.5}
+        {-halfblockwidth, -halfblockheight},
+        {halfblockwidth, -halfblockheight},
+        {halfblockwidth, halfblockheight},
+        {-halfblockwidth, halfblockheight}
     }
     
     self.blockGridX = 0

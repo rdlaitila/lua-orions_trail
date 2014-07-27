@@ -1,6 +1,6 @@
 local Shipbuilder = {}
 
-local ecsManager = Lecs.Manager:new()
+local ecsManager = lecs.Manager:new()
 
 local GRID_STEPX = 40
 local GRID_STEPY = 40

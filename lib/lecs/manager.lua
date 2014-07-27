@@ -1,4 +1,4 @@
-local Manager = Class("Manager")
+local Manager = class("Manager")
 
 function Manager:initialize()
     self._entities = {}

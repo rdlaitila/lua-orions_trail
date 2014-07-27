@@ -1,7 +1,7 @@
-local BlockGroup = Class("BlockGroup", Lecs.Entity)
+local BlockGroup = class("BlockGroup", lecs.Entity)
 
 function BlockGroup:initialize(X,Y,ROT)
-    Lecs.Entity.initialize(self)
+    lecs.Entity.initialize(self)
     
     self:addTag("blockgroup")
     
@@ -49,26 +49,48 @@ function BlockGroup:getBlockFromGrid(GRIDX, GRIDY)
     return nil
 end
 
-function BlockGroup:blockGrid2CanvasGrid(GRIDX, GRIDY)
+function BlockGroup:blockGrid2CanvasGrid(GRIDX, GRIDY)    
     local left, top, right, bottom, totalwidth, totalheight = self:getBlockGridBounds()
-    local canvasgridx = (totalwidth/2 + GRIDX)
-    local canvasgridy = (totalheight/2 + GRIDY)
     
-    if canvasgridx < 0 then canvasgridx = -1*canvasgridx end
-    if canvasgridy < 0 then canvasgridy = -1*canvasgridy end
+    local offsetx = 0
+    local offsety = 0
     
-    return canvasgridx-1, canvasgridy-1
+    if left < 0 then
+        offsetx = left*2
+    elseif left > 0 then
+        offsetx = -1*left
+    end
+    
+    if top < 0 then
+        offsety = top*2
+    elseif top > 0 then
+        offsety = -1*top
+    end
+        
+    local canvasgridx = (GRIDX + offsetx)
+    local canvasgridy = (GRIDY + offsety)
+    
+    return canvasgridx, canvasgridy
 end
 
 function BlockGroup:getBlockGridBounds()
-    local lowx = 0
-    local lowy = 0
-    local highx = 0
-    local highy = 0
+    local lowx = nil
+    local lowy = nil
+    local highx = nil
+    local highy = nil
     local totalwidth = 0
     local totalheight = 0
     
     for index, value in pairs(self.blockList) do
+        if lowx == nil or highx == nil then
+            lowx = value.blockGridX
+            highx = value.blockGridX
+        end
+        if lowy == nil or highy == nil then
+            lowy = value.blockGridY
+            highy = value.blockGridY
+        end        
+        
         if value.blockGridX < lowx then 
             lowx = value.blockGridX 
         elseif value.blockGridX > highx then
@@ -87,16 +109,10 @@ function BlockGroup:getBlockGridBounds()
 end
 
 function BlockGroup:computeRenderCanvas()
-    local left, top, right, bottom = self:getBlockGridBounds()
+    local left, top, right, bottom, width, height = self:getBlockGridBounds()
     
-    local totalwidth = 0
-    local totalheight = 0
-    
-    for a=left, right do totalwidth = totalwidth + 1 end
-    for a=top, bottom do totalheight = totalheight + 1 end
-    
-    local canvaswidth = (totalwidth * G_BLOCKWIDTH)
-    local canvasheight = (totalheight * G_BLOCKHEIGHT)
+    local canvaswidth = (width * G_BLOCKWIDTH)
+    local canvasheight = (height * G_BLOCKHEIGHT)
     
     self.renderCanvas = love.graphics.newCanvas(canvaswidth, canvasheight)
     self.renderCanvasDirty = true

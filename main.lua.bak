@@ -6,7 +6,7 @@ hump = {}
 hump.Camera = require('lib.hump.camera')
 hump.Gamestate = require('lib.hump.gamestate')
 
--- Import lecs Library
+-- Import Lecs Library
 lecs = require('lib.lecs.lecs')
 
 -- Load in other game files
@@ -21,6 +21,6 @@ function love.load()
     --local width, height = love.window.getDesktopDimensions()
     --love.window.setMode(width, height, {fullscreen=true})
     
-    hump.Gamestate.registerEvents()
-    hump.Gamestate.switch(game.states.Mainmenu)
+    Gamestate.registerEvents()
+    Gamestate.switch(game.states.Mainmenu)
 end

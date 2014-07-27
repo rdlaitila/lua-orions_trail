@@ -1,6 +1,6 @@
 local mainmenu = {}
 
-local ECSManager = Lecs.Manager:new()
+local ECSManager = lecs.Manager:new()
 
 local background = {}
 background.image = love.graphics.newImage("game//assets//backgrounds//nebula01.png")
@@ -24,13 +24,13 @@ end
 
 function mainmenu:keypressed(KEY, ISREPEAT)
     if KEY == "1" then
-        Gamestate.switch(game.states.Shipbuilder)
+        hump.Gamestate.switch(game.states.Shipbuilder)
     elseif KEY == "2" then
-        Gamestate.switch(game.states.Shiptest)
+        hump.Gamestate.switch(game.states.Shiptest)
     elseif KEY == "3" then
-        Gamestate.switch(game.states.Shiptest2)
+        hump.Gamestate.switch(game.states.Shiptest2)
     elseif KEY == "4" then
-        Gamestate.switch(game.states.Shiptest3)
+        hump.Gamestate.switch(game.states.Shiptest3)
     end
 end
 

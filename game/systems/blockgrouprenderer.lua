@@ -1,9 +1,9 @@
-local BlockGroupRenderer = Class('BlockGroupRenderer', Lecs.System)
+local BlockGroupRenderer = class('BlockGroupRenderer', lecs.System)
 
 function BlockGroupRenderer:initialize(PRIORITY)
-    Lecs.System.initialize(self, PRIORITY)
+    lecs.System.initialize(self, PRIORITY)
     
-    self.debug = true
+    self.debug = false
 end
 
 function BlockGroupRenderer:update(DT)     
@@ -15,13 +15,10 @@ function BlockGroupRenderer:draw()
     local blockgroups = self._ecsManager:getEntitiesWithTag("blockgroup")
     
     if G_VIEW == 1 then
-        G_CAMERA.x = blockgroups[1].box2dBody:getX()
-        G_CAMERA.y = blockgroups[1].box2dBody:getY()
-        G_CAMERA.rot = blockgroups[1].box2dBody:getAngle()*-1
+        G_CAMERA.x, G_CAMERA.y = blockgroups[1].box2dBody:getWorldCenter()  
     elseif G_VIEW == 2 then
-        G_CAMERA.x = blockgroups[1].box2dBody:getX()
-        G_CAMERA.y = blockgroups[1].box2dBody:getY()
-        G_CAMERA.rot = mat h.rad(math.deg(blockgroups[1].box2dBody:getAngle()*-1) - 90)
+        G_CAMERA.x, G_CAMERA.y = blockgroups[1].box2dBody:getWorldCenter()
+        G_CAMERA.rot = math.rad(math.deg(blockgroups[1].box2dBody:getAngle()*-1) - 90)
     end
     
     for a=1, #blockgroups do
@@ -39,10 +36,8 @@ function BlockGroupRenderer:draw()
                     canvasgridx*G_BLOCKWIDTH, 
                     canvasgridy*G_BLOCKHEIGHT, 
                     0, 
-                    1,
-                    1,
-                    -1*G_BLOCKWIDTH/2,
-                    -1*G_BLOCKHEIGHT/2
+                    G_BLOCKWIDTH/blockgroups[a].blockList[b].sprite:getWidth(),
+                    G_BLOCKHEIGHT/blockgroups[a].blockList[b].sprite:getHeight()
                 )
             end            
             
@@ -66,8 +61,8 @@ function BlockGroupRenderer:draw()
             
             blockgroups[a].renderCanvasDirty = false
             love.graphics.setCanvas()
-        else           
-            local bounds = {blockgroups[a]:getBlockGridBounds()}
+        else            
+            local bounds = {blockgroups[a]:getBlockGridBounds()}            
             local canvasx, canvasy = blockgroups[a]:getBlockGridPixelCoords(
                 "world", 
                 bounds[1], 
@@ -100,6 +95,9 @@ function BlockGroupRenderer:draw()
                 end
                 
                 love.graphics.circle('fill', blockgroups[a].box2dBody:getX(), blockgroups[a].box2dBody:getY(), 5)
+                
+                local groupcenterx, groupcentery = blockgroups[a].box2dBody:getWorldCenter()
+                love.graphics.circle('fill', groupcenterx, groupcentery, 10)
             end
         end
     end

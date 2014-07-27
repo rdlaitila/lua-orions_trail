@@ -4,18 +4,17 @@ function Shiptest3:enter()
     require('game.entities.blockgroup')
     require('game.entities.block')    
     require('game.entities.ship')    
-    require('game.systems.coresystem')
     require('game.systems.camera')
-    require('game.systems.entitydebug')
     require('game.systems.blockgrouprenderer')
     require('game.systems.shiprenderer')
     require('game.systems.spacebackground')
     require('game.systems.physicscollisions')
+    require('game.systems.starfield')
     
     -- Setup state globals
     G_BOX2DWORLD = love.physics.newWorld(0, 0, true)
-    G_ECSMANAGER = Lecs.Manager:new() 
-    G_CAMERA = Camera(love.graphics.getWidth()/2,love.graphics.getHeight()/2)
+    G_ECSMANAGER = lecs.Manager:new() 
+    G_CAMERA = hump.Camera(love.graphics.getWidth()/2,love.graphics.getHeight()/2)
     G_VIEW = 0
     G_BLOCKWIDTH = 65
     G_BLOCKHEIGHT = 65
@@ -26,9 +25,9 @@ function Shiptest3:enter()
     ship:addBlock(game.entities.Block:new(), -1, 0)
     ship:addBlock(game.entities.Block:new(), 1, 0)
     ship:addBlock(game.entities.Block:new(), 0, 1)
-    ship:addBlock(game.entities.Block:new(), 0, -1)]]
-    for a=1, 5 do
-        for b=1, 5 do
+    ship:addBlo10(game.entities.Block:new(), 0, -1)]]
+    for a=1, 8 do
+        for b=1, 4 do
             ship:addBlock(game.entities.Block:new(), a, b)
         end
     end
@@ -42,11 +41,12 @@ function Shiptest3:enter()
     G_ECSMANAGER:addEntity(ship)
     
     G_ECSMANAGER:addSystem(        
+        game.systems.CameraSystem:new(0),
         game.systems.SpaceBackground:new(0),
+        game.systems.Starfield:new(0),
         game.systems.PhysicsCollisions:new(1),
         game.systems.BlockGroupRenderer:new(2),
-        game.systems.ShipRenderer:new(2),
-        game.systems.CameraSystem:new(3)
+        game.systems.ShipRenderer:new(2)        
     )
 end
 

@@ -1,4 +1,4 @@
-local System = Class("System")
+local System = class("System")
 
 function System:initialize(PRIORITY)
     self._ecsManager = nil

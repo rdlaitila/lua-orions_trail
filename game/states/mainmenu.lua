@@ -23,6 +23,10 @@ function mainmenu:draw()
 end
 
 function mainmenu:keypressed(KEY, ISREPEAT)
+    if KEY == "escape" then
+       love.event.quit()
+    end
+    
     if KEY == "1" then
         hump.Gamestate.switch(game.states.Shipbuilder)
     elseif KEY == "2" then

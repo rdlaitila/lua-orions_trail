@@ -37,6 +37,8 @@ function BlockGroup:addBlock(BLOCK, XGRIDPOS, YGRIDPOS)
     BLOCK.blockGridY = YGRIDPOS
     
     table.insert(self.blockList, BLOCK)
+    
+    self:computeRenderCanvas()
 end
 
 function BlockGroup:getBlockFromGrid(GRIDX, GRIDY)

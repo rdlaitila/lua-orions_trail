@@ -26,18 +26,16 @@ function Shiptest3:enter()
     ship:addBlock(game.entities.Block:new(), 1, 0)
     ship:addBlock(game.entities.Block:new(), 0, 1)
     ship:addBlo10(game.entities.Block:new(), 0, -1)]]
-    for a=1, 8 do
-        for b=1, 4 do
+    for a=1, 50 do
+        for b=1, 50 do
             ship:addBlock(game.entities.Block:new(), a, b)
         end
     end
     
-    ship:computeRenderCanvas()
     G_ECSMANAGER:addEntity(ship)
     
     ship = game.entities.Ship:new(500, 500, 0)    
-    ship:addBlock(game.entities.Block:new(), 0, 0)
-    ship:computeRenderCanvas()
+    ship:addBlock(game.entities.Block:new(), 0, 0)    
     G_ECSMANAGER:addEntity(ship)
     
     G_ECSMANAGER:addSystem(        
@@ -51,9 +49,6 @@ function Shiptest3:enter()
 end
 
 function Shiptest3:update(DT)    
-    G_BOX2DWORLD:update(DT)
-    G_ECSMANAGER:update(DT)
-    
     local ship = G_ECSMANAGER:getEntitiesWithTag("ship")[1]
     
     if love.keyboard.isDown('q') then
@@ -91,6 +86,9 @@ function Shiptest3:update(DT)
     else
         ship.isThrustingStarboard = false
     end
+    
+    G_BOX2DWORLD:update(DT)
+    G_ECSMANAGER:update(DT)
 end
 
 function Shiptest3:draw()        

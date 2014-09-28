@@ -26,8 +26,8 @@ function Shiptest3:enter()
     ship:addBlock(game.entities.Block:new(), 1, 0)
     ship:addBlock(game.entities.Block:new(), 0, 1)
     ship:addBlo10(game.entities.Block:new(), 0, -1)]]
-    for a=1, 50 do
-        for b=1, 50 do
+    for a=1, 49 do
+        for b=1, 49 do
             ship:addBlock(game.entities.Block:new(), a, b)
         end
     end

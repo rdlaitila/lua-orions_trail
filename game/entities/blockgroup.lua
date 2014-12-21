@@ -1,5 +1,7 @@
 local BlockGroup = class("BlockGroup", lecs.Entity)
 
+BlockGroup.hullsprites01 = love.graphics.newImage("game//assets//blocksprites//hullsprites01.png")
+
 function BlockGroup:initialize(X,Y,ROT)
     lecs.Entity.initialize(self)
     
@@ -9,9 +11,11 @@ function BlockGroup:initialize(X,Y,ROT)
     
     self.blockList = {}
     
-    self.renderCanvas = love.graphics.newCanvas()
-    
-    self.renderCanvasDirty = true
+    self.spriteBatches = {
+        hull        = love.graphics.newSpriteBatch(BlockGroup.hullsprites01, 2000),
+        interior    = nil,
+        exterior    = nil
+    }
 end
 
 function BlockGroup:addBlock(BLOCK, XGRIDPOS, YGRIDPOS)    
@@ -37,8 +41,6 @@ function BlockGroup:addBlock(BLOCK, XGRIDPOS, YGRIDPOS)
     BLOCK.blockGridY = YGRIDPOS
     
     table.insert(self.blockList, BLOCK)
-    
-    self:computeRenderCanvas()
 end
 
 function BlockGroup:getBlockFromGrid(GRIDX, GRIDY)

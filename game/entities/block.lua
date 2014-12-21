@@ -27,7 +27,9 @@ function Block:initialize()
     
     self.box2dFixtureDensity = 100
     
-    self.sprite = Block.sprite
+    
+    
+    self.spriteQuad = nil
     
     self.drawEnabled = false
 end

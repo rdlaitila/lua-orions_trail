@@ -26,17 +26,17 @@ function Shiptest3:enter()
     ship:addBlock(game.entities.Block:new(), 1, 0)
     ship:addBlock(game.entities.Block:new(), 0, 1)
     ship:addBlo10(game.entities.Block:new(), 0, -1)]]
-    for a=1, 49 do
-        for b=1, 49 do
+    for a=1, 9 do
+        for b=1, 9 do
             ship:addBlock(game.entities.Block:new(), a, b)
         end
     end
     
     G_ECSMANAGER:addEntity(ship)
     
-    ship = game.entities.Ship:new(500, 500, 0)    
+    --[[ship = game.entities.Ship:new(500, 500, 0)    
     ship:addBlock(game.entities.Block:new(), 0, 0)    
-    G_ECSMANAGER:addEntity(ship)
+    G_ECSMANAGER:addEntity(ship)]]
     
     G_ECSMANAGER:addSystem(        
         game.systems.CameraSystem:new(0),
@@ -92,7 +92,8 @@ function Shiptest3:update(DT)
 end
 
 function Shiptest3:draw()        
-    G_ECSMANAGER:draw()    
+    G_ECSMANAGER:draw()   
+    love.graphics.print("FPS: "..love.timer.getFPS(), 10, 20)
 end
 
 function Shiptest3:mousepressed(X, Y, MB)
